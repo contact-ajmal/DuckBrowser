@@ -1,4 +1,4 @@
-# Builds the Duckbrowser desktop installers and attaches them to a GitHub Release.
+# Builds the DuckBrowser desktop installers and attaches them to a GitHub Release.
 #
 #   git tag v0.1.0 && git push origin v0.1.0     → release with DMG (arm64 + x64) and Windows setup .exe
 #   Actions → Release → Run workflow            → same artifacts, no release (for a dry run)
@@ -82,12 +82,12 @@ jobs:
             ## Downloads
             | Platform | File |
             | --- | --- |
-            | macOS · Apple Silicon | `Duckbrowser-mac-arm64.dmg` |
-            | macOS · Intel | `Duckbrowser-mac-x64.dmg` |
-            | Windows · 64-bit | `Duckbrowser-windows-x64-setup.exe` |
+            | macOS · Apple Silicon | `DuckBrowser-mac-arm64.dmg` |
+            | macOS · Intel | `DuckBrowser-mac-x64.dmg` |
+            | Windows · 64-bit | `DuckBrowser-windows-x64-setup.exe` |
 
             The builds are ad-hoc signed, not notarized (no paid Apple Developer / Windows certificate), so the OS asks once on first launch.
-            **macOS:** right-click Duckbrowser.app → *Open* → *Open*. If it says the app is *damaged*, run `xattr -cr /Applications/Duckbrowser.app` in Terminal and open it again.
+            **macOS:** right-click DuckBrowser.app → *Open* → *Open*. If it says the app is *damaged*, run `xattr -cr /Applications/DuckBrowser.app` in Terminal and open it again.
             **Windows:** SmartScreen → *More info* → *Run anyway*. Verify downloads against `SHA256SUMS.txt`.
 
             Everything runs on your machine; the app makes no network requests.

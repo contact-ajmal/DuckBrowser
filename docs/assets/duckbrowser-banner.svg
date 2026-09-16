@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" width="960" height="260" role="img" aria-label="Duckbrowser — local-first data workspace on DuckDB-Wasm">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" width="960" height="260" role="img" aria-label="DuckBrowser — local-first data workspace on DuckDB-Wasm">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#09090b"/>
@@ -45,7 +45,7 @@
     <path d="M56 66 C64 60 78 60 88 66 C80 74 66 76 56 66 Z" fill="#09090b" opacity="0.22"/>
   </g>
   <!-- wordmark -->
-  <text x="240" y="128" font-family="-apple-system, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-1.5" fill="#fafafa">Duck<tspan fill="#a78bfa">browser</tspan></text>
+  <text x="240" y="128" font-family="-apple-system, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-1.5" fill="#fafafa">Duck<tspan fill="#a78bfa">Browser</tspan></text>
   <text x="243" y="170" font-family="-apple-system, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="22" fill="#a1a1aa">Local-first data workspace on DuckDB-Wasm</text>
   <g font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#71717a">
     <text x="243" y="206">zero cloud · zero configuration · nothing leaves the tab</text>

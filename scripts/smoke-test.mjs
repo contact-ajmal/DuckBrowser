@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Duckbrowser smoke test — drives the built site in headless Chrome and checks the
+ * DuckBrowser smoke test — drives the built site in headless Chrome and checks the
  * three pages end to end: the engine boots, every dataset mounts, the
  * Overview populates (KPIs, schema, preview, charts), the Query tool runs SQL,
  * charts it and exports results + query, docs pages run their live cards,
@@ -68,32 +68,32 @@ page.on('requestfailed', (r) => {
 const settled = () => page.waitForFunction(() => [...document.querySelectorAll('duck-query')].every((q) => !q.classList.contains('is-running')), null, { timeout: 60000 });
 const overviewDone = () => page.waitForFunction(() => document.querySelector('.ov-timing')?.textContent.includes('finished'), null, { timeout: 60000 });
 const visibleView = () => page.evaluate(() => [...document.querySelectorAll('section.view[data-view]')].find((v) => !v.hidden)?.dataset.view);
-const Duckbrowser_SAMPLES = 6;
+const DuckBrowser_SAMPLES = 6;
 
 try {
   // ── Page 1 · Overview ──────────────────────────────────────────────────────
   console.log(c.head('Overview  #/'));
   await page.goto(`${BASE}/index.html`, { waitUntil: 'load' });
-  await page.waitForFunction(() => window.Duckbrowser?.engine?.status === 'ready', null, { timeout: 60000 });
-  const boot = await page.evaluate(() => ({ version: Duckbrowser.engine.version, bundle: Duckbrowser.engine.bundleName, ms: Math.round(Duckbrowser.engine.bootMs), tuning: Duckbrowser.engine.tuning }));
+  await page.waitForFunction(() => window.DuckBrowser?.engine?.status === 'ready', null, { timeout: 60000 });
+  const boot = await page.evaluate(() => ({ version: DuckBrowser.engine.version, bundle: DuckBrowser.engine.bundleName, ms: Math.round(DuckBrowser.engine.bootMs), tuning: DuckBrowser.engine.tuning }));
   check(true, `engine ready — DuckDB ${boot.version} (${boot.bundle}) in ${boot.ms} ms`);
   check(boot.tuning.find((t) => t.label.startsWith('memory_limit'))?.ok, 'memory_limit applied');
-  const exts = await page.evaluate(() => Duckbrowser.engine.extensions.map((e) => `${e.name}:${e.ok ? 'ok' : e.error}`));
+  const exts = await page.evaluate(() => DuckBrowser.engine.extensions.map((e) => `${e.name}:${e.ok ? 'ok' : e.error}`));
   check(exts.length === 2 && exts.every((e) => e.endsWith(':ok')), 'parquet + json extensions loaded from the local bundle', exts.join(', '));
   check((await visibleView()) === 'home', 'home view is visible by default');
   await page.waitForFunction(() => document.querySelector('#overview .ov-choose'), null, { timeout: 20000 });
-  const empty = await page.evaluate(() => ({ datasets: Duckbrowser.engine.datasets.size, samples: document.querySelectorAll('#sample-list [data-sample]').length, pill: document.querySelector('#status-pill').textContent }));
-  check(empty.datasets === 0 && empty.samples === Duckbrowser_SAMPLES, `boots empty: 0 datasets loaded, ${empty.samples} samples offered`, empty.pill.replace(/\s+/g, ' ').trim());
+  const empty = await page.evaluate(() => ({ datasets: DuckBrowser.engine.datasets.size, samples: document.querySelectorAll('#sample-list [data-sample]').length, pill: document.querySelector('#status-pill').textContent }));
+  check(empty.datasets === 0 && empty.samples === DuckBrowser_SAMPLES, `boots empty: 0 datasets loaded, ${empty.samples} samples offered`, empty.pill.replace(/\s+/g, ' ').trim());
 
   // Load one sample from the sidebar button, then the rest via "Load all".
   await page.click('#sample-list [data-sample="sales"]');
-  await page.waitForFunction(() => Duckbrowser.engine.activeId === 'sales', null, { timeout: 60000 });
+  await page.waitForFunction(() => DuckBrowser.engine.activeId === 'sales', null, { timeout: 60000 });
   check(true, 'clicking "Load" on a sample mounts it and makes it active');
   await page.click('#samples-load-all');
-  await page.waitForFunction(() => Duckbrowser.engine.datasets.size >= Duckbrowser.manifest.datasets.length && [...Duckbrowser.engine.datasets.values()].every((d) => d.state !== 'loading'), null, { timeout: 60000 });
-  const datasets = await page.evaluate(() => [...Duckbrowser.engine.datasets.values()].map((d) => ({ id: d.id, state: d.state, mode: d.mountMode, error: d.error })));
+  await page.waitForFunction(() => DuckBrowser.engine.datasets.size >= DuckBrowser.manifest.datasets.length && [...DuckBrowser.engine.datasets.values()].every((d) => d.state !== 'loading'), null, { timeout: 60000 });
+  const datasets = await page.evaluate(() => [...DuckBrowser.engine.datasets.values()].map((d) => ({ id: d.id, state: d.state, mode: d.mountMode, error: d.error })));
   for (const d of datasets) check(d.state === 'ready', `sample "${d.id}" mounted`, d.error || d.mode);
-  check(await page.evaluate(() => Duckbrowser.engine.activeId === 'sales'), '"Load all" keeps the active dataset');
+  check(await page.evaluate(() => DuckBrowser.engine.activeId === 'sales'), '"Load all" keeps the active dataset');
 
   await overviewDone();
   await settled();
@@ -116,16 +116,16 @@ try {
   // ── Fork → Query ─────────────────────────────────────────────────────────────
   console.log(c.head('Fork → Query  #/query'));
   await page.evaluate(() => [...document.querySelectorAll('#overview duck-query')].find((q) => q.getAttribute('title').startsWith('Top 5')).fork());
-  await page.waitForFunction(() => location.hash.startsWith('#/query') && Duckbrowser.queryTool.sql.includes('GROUP BY'), null, { timeout: 10000 });
+  await page.waitForFunction(() => location.hash.startsWith('#/query') && DuckBrowser.queryTool.sql.includes('GROUP BY'), null, { timeout: 10000 });
   await page.waitForFunction(() => document.querySelector('.qt-status')?.textContent.includes('Executed'), null, { timeout: 30000 });
   check((await visibleView()) === 'query', 'fork navigated to the Query page and ran the SQL');
   check(await page.evaluate(() => Boolean(document.querySelector('#query-tool canvas'))), 'forked bar chart rendered in the Query tool');
-  check(await page.evaluate(() => Duckbrowser.queryTool.active.name.startsWith('Top 5')), 'fork opened as its own tab named after the card');
+  check(await page.evaluate(() => DuckBrowser.queryTool.active.name.startsWith('Top 5')), 'fork opened as its own tab named after the card');
 
   // ── Tabs: concurrent runs + stop ────────────────────────────────────────────
   console.log(c.head('Tabs'));
   const tabs = await page.evaluate(async () => {
-    const qt = Duckbrowser.queryTool;
+    const qt = DuckBrowser.queryTool;
     const a = qt.newTab({ name: 'A', sql: 'SELECT COUNT(*) AS n FROM range(600000000)' });
     const b = qt.newTab({ name: 'B', sql: 'SELECT SUM(range) AS s FROM range(600000000)' });
     const z = qt.newTab({ name: 'Z', sql: 'SELECT COUNT(*) FROM range(5000000000)' });
@@ -142,7 +142,7 @@ try {
   check(tabs.zCancelled, 'Stop cancelled the long-running tab');
   check(tabs.dots === tabs.tabCount, `tab bar shows ${tabs.tabCount} tabs`);
   const closed = await page.evaluate(async () => {
-    const qt = Duckbrowser.queryTool;
+    const qt = DuckBrowser.queryTool;
     const before = qt.tabs.length;
     await qt.closeTab(qt.tabs.find((t) => t.name === 'Z').id);
     qt.renameTab(qt.active.id, 'renamed');
@@ -154,10 +154,10 @@ try {
   // ── Import .sql ───────────────────────────────────────────────────────────────
   console.log(c.head('Import'));
   const imported = await page.evaluate(async () => {
-    const qt = Duckbrowser.queryTool;
+    const qt = DuckBrowser.queryTool;
     const before = qt.tabs.length;
     const single = new File(['SELECT region, COUNT(*) AS n FROM sales GROUP BY 1;'], 'by_region.sql', { type: 'application/sql' });
-    const multi = new File([['-- Duckbrowser query export', '-- exported: now', '', '-- @duckbrowser-tab: Alpha', 'SELECT 1 AS a;', '', '-- @duckbrowser-tab: Beta', 'SELECT 2 AS b;'].join('\n')], 'bundle.sql', { type: 'application/sql' });
+    const multi = new File([['-- DuckBrowser query export', '-- exported: now', '', '-- @duckbrowser-tab: Alpha', 'SELECT 1 AS a;', '', '-- @duckbrowser-tab: Beta', 'SELECT 2 AS b;'].join('\n')], 'bundle.sql', { type: 'application/sql' });
     const n = await qt.importFiles([single, multi]);
     const names = qt.tabs.slice(before).map((t) => t.name);
     await qt.run(qt.active.id);
@@ -166,18 +166,18 @@ try {
   check(imported.n === 3 && imported.names.join(',') === 'by_region,Alpha,Beta', 'import: one file → one tab, multi-tab export → three tabs', imported.names.join(', '));
   check(imported.activeName === 'by_region' && imported.activeRows === 5, 'imported query runs in its tab');
   const dropped = await page.evaluate(async () => {
-    const before = Duckbrowser.queryTool.tabs.length;
-    await Duckbrowser.panel.ingest([new File(['SELECT 42 AS answer;'], 'dropped.sql', { type: 'application/sql' })]);
+    const before = DuckBrowser.queryTool.tabs.length;
+    await DuckBrowser.panel.ingest([new File(['SELECT 42 AS answer;'], 'dropped.sql', { type: 'application/sql' })]);
     await new Promise((r) => setTimeout(r, 300));
-    return { added: Duckbrowser.queryTool.tabs.length - before, hash: location.hash };
+    return { added: DuckBrowser.queryTool.tabs.length - before, hash: location.hash };
   });
   check(dropped.added === 1 && dropped.hash.startsWith('#/query'), 'dropping a .sql file anywhere opens it as a tab on the Query page');
 
   // ── Page 2 · Query tool ──────────────────────────────────────────────────────
   const runSql = async (sql) => {
     await page.evaluate((s) => {
-      Duckbrowser.queryTool.sql = s;
-      return Duckbrowser.queryTool.run();
+      DuckBrowser.queryTool.sql = s;
+      return DuckBrowser.queryTool.run();
     }, sql);
   };
   await runSql('SELECT region, COUNT(*) AS n, ROUND(SUM(revenue)) AS revenue FROM sales GROUP BY 1 ORDER BY 2 DESC');
@@ -192,10 +192,10 @@ try {
   check(await page.evaluate(() => !document.querySelector('#query-tool canvas')), 'switched back to table view');
 
   const exp = await page.evaluate(async () => {
-    const sql = Duckbrowser.queryTool.sql;
-    const csv = await Duckbrowser.engine.exportQuery(sql, 'csv');
-    const pq = await Duckbrowser.engine.exportQuery(sql, 'parquet');
-    const json = JSON.parse(await (await Duckbrowser.engine.exportQuery(sql, 'json')).text());
+    const sql = DuckBrowser.queryTool.sql;
+    const csv = await DuckBrowser.engine.exportQuery(sql, 'csv');
+    const pq = await DuckBrowser.engine.exportQuery(sql, 'parquet');
+    const json = JSON.parse(await (await DuckBrowser.engine.exportQuery(sql, 'json')).text());
     return { csvLines: (await csv.text()).trim().split('\n').length, parquetMagic: String.fromCharCode(...new Uint8Array(await pq.slice(0, 4).arrayBuffer())), jsonRows: Array.isArray(json) ? json.length : -1, jsonKeys: Object.keys(json[0] ?? {}) };
   });
   check(exp.csvLines === 6, 'CSV download: header + 5 rows');
@@ -211,16 +211,16 @@ try {
   const hist = await page.evaluate(() => document.querySelectorAll('.qt-history li[data-idx], .qt-history button[data-idx]').length);
   check(hist >= 2, `history lists ${hist} entries`);
   const insert = await page.evaluate(() => {
-    Duckbrowser.queryTool.sql = 'SELECT ';
+    DuckBrowser.queryTool.sql = 'SELECT ';
     document.querySelector('.qt-schema [data-insert]').click();
-    return Duckbrowser.queryTool.sql;
+    return DuckBrowser.queryTool.sql;
   });
   check(/^SELECT "?\w+"?/.test(insert), 'schema explorer inserts an identifier', insert);
 
   // Switching dataset from the Query page updates the alias.
   const other = datasets.find((d) => d.state === 'ready' && d.id !== 'sales')?.id;
   await page.selectOption('.qt-dataset', other);
-  await page.waitForFunction((id) => Duckbrowser.engine.activeId === id, other, { timeout: 20000 });
+  await page.waitForFunction((id) => DuckBrowser.engine.activeId === id, other, { timeout: 20000 });
   await runSql('SELECT COUNT(*) AS n FROM dataset');
   check(await page.evaluate(() => document.querySelector('.qt-status').textContent.includes('1 row')), `active dataset switched to "${other}" from the Query page`);
 
@@ -229,7 +229,7 @@ try {
   await page.evaluate(() => (location.hash = '#/docs'));
   await page.waitForFunction(() => location.hash.startsWith('#/docs/'), null, { timeout: 5000 });
   check((await visibleView()) === 'docs', `docs view visible, redirected to ${await page.evaluate(() => location.hash)}`);
-  const pages = await page.evaluate(() => Duckbrowser.manifest.pages.map((p) => p.slug));
+  const pages = await page.evaluate(() => DuckBrowser.manifest.pages.map((p) => p.slug));
   for (const slug of pages) {
     await page.evaluate((s) => (location.hash = `#/docs/${s}`), slug);
     await page.waitForFunction((s) => !document.querySelector(`article[data-doc="${s}"]`).hidden, slug, { timeout: 5000 });
@@ -250,7 +250,7 @@ try {
   await page.evaluate(() => (location.hash = '#/settings'));
   await page.waitForTimeout(300);
   check((await visibleView()) === 'settings', 'settings view visible');
-  const before = await page.evaluate(() => ({ limit: Duckbrowser.engine.current.memoryLimit, slider: document.querySelector('.st-mem-range').value }));
+  const before = await page.evaluate(() => ({ limit: DuckBrowser.engine.current.memoryLimit, slider: document.querySelector('.st-mem-range').value }));
   await page.evaluate(() => {
     const r = document.querySelector('.st-mem-range');
     r.value = 1024;
@@ -258,14 +258,14 @@ try {
     r.dispatchEvent(new Event('change'));
   });
   await page.waitForFunction(() => document.querySelector('.st-mem-status').textContent.includes('applied'), null, { timeout: 10000 });
-  const mem = await page.evaluate(() => ({ current: Duckbrowser.engine.current.memoryLimit, stored: Duckbrowser.settings.get('engine.memoryLimitMB'), pill: document.querySelector('#status-pill').textContent.replace(/\s+/g, ' ') }));
+  const mem = await page.evaluate(() => ({ current: DuckBrowser.engine.current.memoryLimit, stored: DuckBrowser.settings.get('engine.memoryLimitMB'), pill: document.querySelector('#status-pill').textContent.replace(/\s+/g, ' ') }));
   check(mem.current.startsWith('976') && mem.stored === 1024 && mem.pill.includes('1.0 GB headroom'), `memory_limit applied live: ${before.limit} → ${mem.current}`, 'status pill follows');
   await page.click('[data-preset="auto"]');
   await page.waitForFunction(() => document.querySelector('.st-mem-status').textContent.includes('auto'), null, { timeout: 10000 });
-  const auto = await page.evaluate(() => ({ current: Duckbrowser.engine.current.memoryLimit, stored: Duckbrowser.settings.get('engine.memoryLimitMB'), autoMB: Math.round(Duckbrowser.engine.hardware.memoryLimitAuto / 1024 ** 2), liveMB: Math.round(Duckbrowser.engine.hardware.memoryLimit / 1024 ** 2) }));
+  const auto = await page.evaluate(() => ({ current: DuckBrowser.engine.current.memoryLimit, stored: DuckBrowser.settings.get('engine.memoryLimitMB'), autoMB: Math.round(DuckBrowser.engine.hardware.memoryLimitAuto / 1024 ** 2), liveMB: Math.round(DuckBrowser.engine.hardware.memoryLimit / 1024 ** 2) }));
   check(auto.stored === null && auto.liveMB === auto.autoMB, `Auto preset restores the detected limit (${auto.current})`);
   await page.click('label.switch:has([data-engine-toggle="preserveInsertionOrder"])');
-  await page.waitForFunction(() => Duckbrowser.engine.current.preserveInsertionOrder === true, null, { timeout: 10000 });
+  await page.waitForFunction(() => DuckBrowser.engine.current.preserveInsertionOrder === true, null, { timeout: 10000 });
   check(true, 'preserve_insertion_order toggled live');
   const threads = await page.evaluate(() => ({ disabled: document.querySelector('.st-threads-range').disabled, note: document.querySelector('.st-threads-note').textContent, max: document.querySelector('.st-mem-range').max }));
   check(threads.disabled && /single-threaded/.test(threads.note), 'threads control is honest about the single-threaded build');
@@ -277,7 +277,7 @@ try {
     r.dispatchEvent(new Event('change'));
   });
   await page.waitForFunction(() => !document.querySelector('.st-mem-warn').hidden, null, { timeout: 10000 });
-  check(await page.evaluate(() => Duckbrowser.engine.current.memoryLimit.startsWith('3.8')), 'memory_limit = 4 GB applied with the unsafe-zone warning shown');
+  check(await page.evaluate(() => DuckBrowser.engine.current.memoryLimit.startsWith('3.8')), 'memory_limit = 4 GB applied with the unsafe-zone warning shown');
   await page.click('[data-preset="auto"]');
   await page.waitForFunction(() => document.querySelector('.st-mem-status').textContent.includes('auto'), null, { timeout: 10000 });
   await page.selectOption('[data-setting="tableRows"]', '100');
@@ -289,10 +289,10 @@ try {
     r.value = 1536;
     r.dispatchEvent(new Event('change'));
   });
-  await page.waitForFunction(() => Duckbrowser.settings.get('engine.memoryLimitMB') === 1536, null, { timeout: 10000 });
+  await page.waitForFunction(() => DuckBrowser.settings.get('engine.memoryLimitMB') === 1536, null, { timeout: 10000 });
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => window.Duckbrowser?.engine?.status === 'ready', null, { timeout: 60000 });
-  const boot2 = await page.evaluate(() => ({ limit: Duckbrowser.engine.current.memoryLimit, preserve: Duckbrowser.engine.current.preserveInsertionOrder, tuning: Duckbrowser.engine.tuning.find((t) => t.key === 'memoryLimitMB')?.label }));
+  await page.waitForFunction(() => window.DuckBrowser?.engine?.status === 'ready', null, { timeout: 60000 });
+  const boot2 = await page.evaluate(() => ({ limit: DuckBrowser.engine.current.memoryLimit, preserve: DuckBrowser.engine.current.preserveInsertionOrder, tuning: DuckBrowser.engine.tuning.find((t) => t.key === 'memoryLimitMB')?.label }));
   check(boot2.limit.startsWith('1.4') && boot2.preserve === true, `overrides re-applied at boot (${boot2.tuning}, preserve_insertion_order = true)`);
   // profile off → schema card skips SUMMARIZE
   await page.evaluate(() => (location.hash = '#/'));
@@ -300,28 +300,28 @@ try {
   await overviewDone();
   check(await page.evaluate(() => /profiling is off/.test(document.querySelector('.ov-schema-meta').textContent)), 'overview respects "profile off"');
   await page.evaluate(() => {
-    Duckbrowser.settings.reset();
+    DuckBrowser.settings.reset();
   });
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => window.Duckbrowser?.engine?.status === 'ready', null, { timeout: 60000 });
-  check(await page.evaluate(() => Math.round(Duckbrowser.engine.hardware.memoryLimit / 1024 ** 2) === Math.round(Duckbrowser.engine.hardware.memoryLimitAuto / 1024 ** 2)), 'reset restores detected defaults after reload');
+  await page.waitForFunction(() => window.DuckBrowser?.engine?.status === 'ready', null, { timeout: 60000 });
+  check(await page.evaluate(() => Math.round(DuckBrowser.engine.hardware.memoryLimit / 1024 ** 2) === Math.round(DuckBrowser.engine.hardware.memoryLimitAuto / 1024 ** 2)), 'reset restores detected defaults after reload');
   // The remembered selection re-mounts "sales" on its own after a reload.
-  await page.waitForFunction(() => Duckbrowser.engine.activeId === 'sales', null, { timeout: 60000 });
+  await page.waitForFunction(() => DuckBrowser.engine.activeId === 'sales', null, { timeout: 60000 });
   await overviewDone();
   check(true, 'remembered dataset re-mounted after reload');
 
   // ── Threaded engine (opt-in) ──────────────────────────────────────────────────
   console.log(c.head('Threaded engine  (opt-in)'));
   await page.evaluate(() => {
-    Duckbrowser.settings.set('engine.bundle', 'threaded');
-    Duckbrowser.settings.set('engine.threads', 3);
+    DuckBrowser.settings.set('engine.bundle', 'threaded');
+    DuckBrowser.settings.set('engine.threads', 3);
   });
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => window.Duckbrowser?.engine?.status === 'ready', null, { timeout: 90000 });
+  await page.waitForFunction(() => window.DuckBrowser?.engine?.status === 'ready', null, { timeout: 90000 });
   const thr = await page.evaluate(async () => {
-    const e = Duckbrowser.engine;
-    const csv = await Duckbrowser.panel.loadSample('sales', { select: true }).catch(() => null);
-    const pq = await Duckbrowser.panel.loadSample('orders', { select: false }).catch(() => null);
+    const e = DuckBrowser.engine;
+    const csv = await DuckBrowser.panel.loadSample('sales', { select: true }).catch(() => null);
+    const pq = await DuckBrowser.panel.loadSample('orders', { select: false }).catch(() => null);
     const pqErr = e.datasets.get('orders')?.error || '';
     await e.query('CREATE TABLE bench AS SELECT range AS id, (range * 7919) % 1000 AS k, (range % 977)::DOUBLE AS v FROM range(8000000)');
     const t0 = performance.now();
@@ -333,20 +333,20 @@ try {
   check(thr.csv === 'ready', 'CSV works on the threaded engine');
   check(thr.pq !== 'ready' && /single-threaded engine/.test(thr.pqErr), 'Parquet on the threaded engine fails fast with a clear hint', thr.pqErr.slice(0, 80));
   check(await page.evaluate(() => document.querySelector('.st-threads-range').disabled === false), 'threads slider is enabled on the threaded engine');
-  await page.evaluate(() => Duckbrowser.settings.set('engine.bundle', 'single'));
+  await page.evaluate(() => DuckBrowser.settings.set('engine.bundle', 'single'));
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => window.Duckbrowser?.engine?.status === 'ready', null, { timeout: 90000 });
-  check(await page.evaluate(() => Duckbrowser.engine.bundleName === 'eh'), 'back to the single-threaded engine');
-  await page.waitForFunction(() => Duckbrowser.engine.activeId === 'sales', null, { timeout: 60000 });
+  await page.waitForFunction(() => window.DuckBrowser?.engine?.status === 'ready', null, { timeout: 90000 });
+  check(await page.evaluate(() => DuckBrowser.engine.bundleName === 'eh'), 'back to the single-threaded engine');
+  await page.waitForFunction(() => DuckBrowser.engine.activeId === 'sales', null, { timeout: 60000 });
   await overviewDone();
 
   // ── Query guards ────────────────────────────────────────────────────────────────
   console.log(c.head('Query guards'));
   const guard = await page.evaluate(async () => {
-    Duckbrowser.settings.set('maxConcurrentQueries', 2);
+    DuckBrowser.settings.set('maxConcurrentQueries', 2);
     location.hash = '#/query';
     await new Promise((r) => setTimeout(r, 300));
-    const qt = Duckbrowser.queryTool;
+    const qt = DuckBrowser.queryTool;
     const tabs = [1, 2, 3, 4].map((i) => qt.newTab({ name: 'g' + i, sql: `SELECT COUNT(*) FROM range(${400000000 + i})` }));
     for (const t of tabs) qt.run(t.id);
     // run() marks the tab running/queued synchronously, so this snapshot is deterministic.
@@ -357,12 +357,12 @@ try {
       await new Promise((r) => setTimeout(r, 25));
     }
     const done = tabs.every((t) => t.result?.numRows === 1);
-    Duckbrowser.settings.set('queryTimeoutSec', 1);
+    DuckBrowser.settings.set('queryTimeoutSec', 1);
     const slow = qt.newTab({ name: 'slow', sql: 'SELECT COUNT(*) FROM range(9000000000)' });
     const t0 = performance.now();
     await qt.run(slow.id);
-    Duckbrowser.settings.set('queryTimeoutSec', 0);
-    Duckbrowser.settings.set('maxConcurrentQueries', 4);
+    DuckBrowser.settings.set('queryTimeoutSec', 0);
+    DuckBrowser.settings.set('maxConcurrentQueries', 4);
     return { snapshot, peak, done, timeoutMs: Math.round(performance.now() - t0), timeoutMsg: slow.error?.message };
   });
   check(guard.snapshot === 'RRQQ' && guard.peak <= 2 && guard.done, `concurrency limit 2: never more than ${guard.peak} running, all four finished (${guard.snapshot})`);
@@ -373,10 +373,10 @@ try {
   console.log(c.head('Local file'));
   const drop = await page.evaluate(async () => {
     const file = new File(['id,name,score,when\n1,alpha,3.5,2024-01-02\n2,beta,4.25,2024-02-03\n'], 'smoke test (1).csv', { type: 'text/csv' });
-    const rec = await Duckbrowser.engine.mountLocalFile(file);
-    Duckbrowser.panel.onDrop(rec.id);
+    const rec = await DuckBrowser.engine.mountLocalFile(file);
+    DuckBrowser.panel.onDrop(rec.id);
     await new Promise((r) => setTimeout(r, 1500));
-    return { id: rec.id, mode: rec.mountMode, active: Duckbrowser.engine.activeId, hash: location.hash, h1: document.querySelector('#overview h1')?.textContent };
+    return { id: rec.id, mode: rec.mountMode, active: DuckBrowser.engine.activeId, hash: location.hash, h1: document.querySelector('#overview h1')?.textContent };
   });
   check(drop.active === drop.id && drop.mode === 'file-reader', `dropped file mounted as "${drop.id}" via ${drop.mode}`);
   check(drop.hash.startsWith('#/') && !drop.hash.startsWith('#/query') && drop.h1 === 'smoke test (1).csv', 'drop routed to the Overview for the new file', drop.hash);
@@ -386,9 +386,9 @@ try {
     for (let i = 0; i < 70000; i++) rows.push({ id: i, user: `user_${i % 500}`, amount: i % 97, meta: { device: i % 2 ? 'mobile' : 'desktop', note: 'x'.repeat(160) }, tags: ['a', 'b'] });
     const arrayFile = new File([JSON.stringify(rows)], 'big-array.json', { type: 'application/json' });
     const wrapped = new File([JSON.stringify({ status: 'ok', count: rows.length, data: rows })], 'wrapped.json', { type: 'application/json' });
-    const count = async (id) => Number((await Duckbrowser.engine.query(`SELECT COUNT(*) AS n FROM "${id}"`)).table.toArray()[0].n);
-    const a = await Duckbrowser.engine.mountLocalFile(arrayFile).catch((e) => ({ state: 'error', error: e.message }));
-    const w = await Duckbrowser.engine.mountLocalFile(wrapped).catch((e) => ({ state: 'error', error: e.message }));
+    const count = async (id) => Number((await DuckBrowser.engine.query(`SELECT COUNT(*) AS n FROM "${id}"`)).table.toArray()[0].n);
+    const a = await DuckBrowser.engine.mountLocalFile(arrayFile).catch((e) => ({ state: 'error', error: e.message }));
+    const w = await DuckBrowser.engine.mountLocalFile(wrapped).catch((e) => ({ state: 'error', error: e.message }));
     return {
       mb: (arrayFile.size / 1024 ** 2).toFixed(1),
       array: { state: a.state, error: a.error, rows: a.state === 'ready' ? await count(a.id) : null, cols: a.schema?.length },
@@ -399,9 +399,9 @@ try {
   check(bigJson.wrapped.state === 'ready' && bigJson.wrapped.rows === 70000 && bigJson.wrapped.unwrapped?.column === 'data' && bigJson.wrapped.maxObj > 16777216, `wrapper-object JSON retried with a larger maximum_object_size and unnested from "data" (${bigJson.wrapped.rows} rows)`, bigJson.wrapped.error || (bigJson.wrapped.cols || []).join(', '));
 
   const unloaded = await page.evaluate(async () => {
-    await Duckbrowser.engine.unmount('smoke_test_1');
+    await DuckBrowser.engine.unmount('smoke_test_1');
     await new Promise((r) => setTimeout(r, 800));
-    return { gone: !Duckbrowser.engine.datasets.has('smoke_test_1'), active: Duckbrowser.engine.activeId, h1: document.querySelector('#overview h1')?.textContent };
+    return { gone: !DuckBrowser.engine.datasets.has('smoke_test_1'), active: DuckBrowser.engine.activeId, h1: document.querySelector('#overview h1')?.textContent };
   });
   check(unloaded.gone && unloaded.active && unloaded.h1?.includes(unloaded.active), `unloading the active dataset falls back to "${unloaded.active}"`);
 

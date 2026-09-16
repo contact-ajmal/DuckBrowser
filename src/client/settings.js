@@ -4,13 +4,13 @@
  * Two groups:
  *   engine.*   DuckDB settings applied live via SET (memory_limit, threads, …)
  *              `null` means "auto" — use the hardware-derived default.
- *   the rest   Duckbrowser behaviour (row limits, overview profile, thresholds…)
+ *   the rest   DuckBrowser behaviour (row limits, overview profile, thresholds…)
  */
 
 const KEY = 'duckbrowser.settings';
 
 /**
- * The project has been renamed twice (QuillDB → DuckView → Duckbrowser).
+ * The project has been renamed twice (QuillDB → DuckView → DuckBrowser).
  * Carry over anything saved under an old key prefix the first time this
  * build runs, so tabs, history and settings survive. Newer prefixes win.
  * Old keys are left in place, untouched.
@@ -115,7 +115,7 @@ class Settings {
       try {
         fn(path, value);
       } catch (e) {
-        console.error('[Duckbrowser] settings listener threw', e);
+        console.error('[DuckBrowser] settings listener threw', e);
       }
     }
   }

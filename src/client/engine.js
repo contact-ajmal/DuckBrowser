@@ -1,5 +1,5 @@
 /**
- * Duckbrowser engine — a thin, event-emitting wrapper around DuckDB-Wasm.
+ * DuckBrowser engine — a thin, event-emitting wrapper around DuckDB-Wasm.
  *
  *   engine.boot()                 → instantiate wasm in a Web Worker, apply tuning
  *   engine.mount(dataset)         → register a file (URL or File) and create a view
@@ -143,7 +143,7 @@ class Emitter {
       try {
         fn(payload);
       } catch (e) {
-        console.error(`[Duckbrowser] listener for "${event}" threw`, e);
+        console.error(`[DuckBrowser] listener for "${event}" threw`, e);
       }
     }
   }
@@ -319,7 +319,7 @@ export class Engine extends Emitter {
       this.readyAt = performance.now();
       this.emit('status', { status: 'ready', message: `DuckDB ${this.version} ready in ${Math.round(this.bootMs)} ms` });
       console.info(
-        `%c🦆 Duckbrowser%c DuckDB ${this.version} (${bundleName} bundle) booted in ${Math.round(this.bootMs)} ms · ` +
+        `%c🦆 DuckBrowser%c DuckDB ${this.version} (${bundleName} bundle) booted in ${Math.round(this.bootMs)} ms · ` +
           `${this.hardware.cores} cores · ${this.hardware.threadsActive} thread(s) · limit ${this.hardware.memoryLimitApplied}`,
         'color:#a78bfa;font-weight:600',
         'color:inherit',
@@ -330,7 +330,7 @@ export class Engine extends Emitter {
       this.status = 'error';
       this.bootError = err;
       this.emit('status', { status: 'error', message: `Engine failed to start: ${err?.message || err}` });
-      console.error('[Duckbrowser] boot failed', err);
+      console.error('[DuckBrowser] boot failed', err);
       throw err;
     }
   }
@@ -351,7 +351,7 @@ export class Engine extends Emitter {
         await this.conn.query(`SET autoload_known_extensions = false`);
       }
     } catch (err) {
-      console.warn('[Duckbrowser] could not point DuckDB at the local extension repository', err);
+      console.warn('[DuckBrowser] could not point DuckDB at the local extension repository', err);
     }
     for (const name of this.extensionNames) {
       if (this.bundleName === 'coi') {
@@ -367,7 +367,7 @@ export class Engine extends Emitter {
         this.extensions.push({ name, ok: true, ms: performance.now() - t0 });
       } catch (err) {
         this.extensions.push({ name, ok: false, error: cleanError(err), ms: performance.now() - t0 });
-        console.warn(`[Duckbrowser] extension "${name}" failed to load from the local bundle:`, cleanError(err));
+        console.warn(`[DuckBrowser] extension "${name}" failed to load from the local bundle:`, cleanError(err));
       }
     }
   }
@@ -583,7 +583,7 @@ export class Engine extends Emitter {
       rec.mountMode = 'http-range';
     } catch (err) {
       // Fallback (no Range support, file:// …): fetch fully and register the buffer.
-      if (this.debug) console.warn(`[Duckbrowser] HTTP mount failed for ${rec.file}; falling back to buffer`, err);
+      if (this.debug) console.warn(`[DuckBrowser] HTTP mount failed for ${rec.file}; falling back to buffer`, err);
       await this.db.dropFile(rec.file).catch(() => {});
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${rec.file}`);

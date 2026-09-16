@@ -1,5 +1,5 @@
 /**
- * Duckbrowser desktop shell (Electron).
+ * DuckBrowser desktop shell (Electron).
  *
  * Serves the built site from `dist/` over a private `duckbrowser://` scheme so
  * ES modules, Web Workers and wasm behave exactly as on a web server:
@@ -116,7 +116,7 @@ function createWindow() {
     height: 920,
     minWidth: 900,
     minHeight: 600,
-    title: 'Duckbrowser',
+    title: 'DuckBrowser',
     backgroundColor: '#09090b',
     show: false,
     icon: process.platform === 'linux' ? path.join(__dirname, '..', 'build', 'icon.png') : undefined,
@@ -170,7 +170,7 @@ function buildMenu() {
     {
       role: 'help',
       submenu: [
-        { label: 'Duckbrowser on GitHub', click: () => shell.openExternal('https://github.com/contact-ajmal/Duckbrowser') },
+        { label: 'DuckBrowser on GitHub', click: () => shell.openExternal('https://github.com/contact-ajmal/DuckBrowser') },
         { label: 'DuckDB documentation', click: () => shell.openExternal('https://duckdb.org/docs/') },
       ],
     },

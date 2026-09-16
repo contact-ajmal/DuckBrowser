@@ -1,6 +1,6 @@
 {
   "name": "duckbrowser",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Local-first, privacy-focused static data workspace. Markdown + data files in, DuckDB-Wasm dashboard out.",
   "license": "MIT",
   "private": true,
@@ -38,13 +38,13 @@
     "tailwindcss": "^4.1.0"
   },
   "duckbrowser": {
-    "title": "Duckbrowser",
+    "title": "DuckBrowser",
     "autoload": false,
     "defaultDataset": "sales"
   },
   "build": {
     "appId": "com.duckbrowser.app",
-    "productName": "Duckbrowser",
+    "productName": "DuckBrowser",
     "copyright": "Copyright \u00a9 2026 Ajmal Baba",
     "directories": {
       "output": "release",
@@ -108,7 +108,7 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "shortcutName": "Duckbrowser"
+      "shortcutName": "DuckBrowser"
     }
   }
 }

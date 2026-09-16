@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Duckbrowser build pipeline.
+ * DuckBrowser build pipeline.
  *
  *   content/*.md  ──marked──▶  dist/index.html  (docs view; ```sql fences → <duck-query>)
  *   data/*        ──copy───▶  dist/data/        (+ dist/manifest.json)
@@ -343,7 +343,7 @@ function buildTailwind(input, output) {
 // ---------------------------------------------------------------------------
 async function build() {
   const t0 = Date.now();
-  console.log(`\n🦆  ${c.bold('Duckbrowser build')} ${c.dim(`v${pkg.version}`)}`);
+  console.log(`\n🦆  ${c.bold('DuckBrowser build')} ${c.dim(`v${pkg.version}`)}`);
 
   step(1, 'Clean output directory');
   await fs.emptyDir(DIRS.dist);
@@ -404,8 +404,8 @@ async function build() {
   const template = await fs.readFile(path.join(DIRS.src, 'template.html'), 'utf8');
   const config = pkg.duckbrowser ?? {};
   const manifest = {
-    name: 'Duckbrowser',
-    title: config.title || 'Duckbrowser',
+    name: 'DuckBrowser',
+    title: config.title || 'DuckBrowser',
     version: pkg.version,
     description: config.description || pkg.description,
     // Samples are listed but only mounted on request unless `autoload` is set.

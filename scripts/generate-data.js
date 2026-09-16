@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Duckbrowser — sample dataset generator.
+ * DuckBrowser — sample dataset generator.
  *
  * Produces deterministic sample data in /data, one file per supported format:
  *   sales.csv        CSV       ~6k rows   orders with dates, regions, products
@@ -290,7 +290,7 @@ const log = (msg) => console.log(`  ${msg}`);
 const sizeOf = (p) => `${(fs.statSync(p).size / 1024).toFixed(1)} KB`;
 
 async function main() {
-  console.log('\n🦆  Duckbrowser — generating sample datasets\n');
+  console.log('\n🦆  DuckBrowser — generating sample datasets\n');
   await fs.ensureDir(DATA_DIR);
 
   // --- CSV

@@ -1,5 +1,5 @@
 /*
- * Duckbrowser cross-origin-isolation service worker.
+ * DuckBrowser cross-origin-isolation service worker.
  *
  * DuckDB-Wasm can only use multiple threads when the page is cross-origin
  * isolated, which needs two response headers the static host may not send
