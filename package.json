@@ -1,6 +1,6 @@
 {
   "name": "duckview",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local-first, privacy-focused static data workspace. Markdown + data files in, DuckDB-Wasm dashboard out.",
   "license": "MIT",
   "private": true,
@@ -71,9 +71,10 @@
       ],
       "icon": "build/icon.png",
       "darkModeSupport": true,
-      "identity": null,
+      "identity": "-",
       "hardenedRuntime": false,
-      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+      "artifactName": "${productName}-mac-${arch}.${ext}",
+      "gatekeeperAssess": false
     },
     "dmg": {
       "title": "${productName} ${version}",
@@ -101,7 +102,7 @@
         }
       ],
       "icon": "build/icon.png",
-      "artifactName": "${productName}-${version}-windows-${arch}-setup.${ext}"
+      "artifactName": "${productName}-windows-${arch}-setup.${ext}"
     },
     "nsis": {
       "oneClick": false,

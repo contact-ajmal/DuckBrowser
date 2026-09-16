@@ -82,10 +82,12 @@ jobs:
             ## Downloads
             | Platform | File |
             | --- | --- |
-            | macOS · Apple Silicon | `DuckView-*-mac-arm64.dmg` |
-            | macOS · Intel | `DuckView-*-mac-x64.dmg` |
-            | Windows · 64-bit | `DuckView-*-windows-x64-setup.exe` |
+            | macOS · Apple Silicon | `DuckView-mac-arm64.dmg` |
+            | macOS · Intel | `DuckView-mac-x64.dmg` |
+            | Windows · 64-bit | `DuckView-windows-x64-setup.exe` |
 
-            The builds are **unsigned**. macOS: right-click the app → *Open* the first time (or `xattr -dr com.apple.quarantine /Applications/DuckView.app`). Windows: SmartScreen → *More info* → *Run anyway*. Verify downloads against `SHA256SUMS.txt`.
+            The builds are ad-hoc signed, not notarized (no paid Apple Developer / Windows certificate), so the OS asks once on first launch.
+            **macOS:** right-click DuckView.app → *Open* → *Open*. If it says the app is *damaged*, run `xattr -cr /Applications/DuckView.app` in Terminal and open it again.
+            **Windows:** SmartScreen → *More info* → *Run anyway*. Verify downloads against `SHA256SUMS.txt`.
 
             Everything runs on your machine; the app makes no network requests.

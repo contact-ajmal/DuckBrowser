@@ -19,12 +19,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-arm64.dmg"><img alt="Download for macOS (Apple Silicon)" src="https://img.shields.io/badge/Download-macOS%20Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-x64.dmg"><img alt="Download for macOS (Intel)" src="https://img.shields.io/badge/Download-macOS%20Intel-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-windows-x64-setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-arm64.dmg"><img alt="Download for macOS (Apple Silicon)" src="https://img.shields.io/badge/Download-macOS%20Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-x64.dmg"><img alt="Download for macOS (Intel)" src="https://img.shields.io/badge/Download-macOS%20Intel-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-windows-x64-setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white"></a>
 </p>
 <p align="center">
-  <sub>Version 0.1.0 · <a href="https://github.com/contact-ajmal/DuckView/releases/latest">all releases</a> · no account, no install of anything else, no internet needed after download · <a href="#install-the-desktop-app">install instructions ↓</a></sub>
+  <a href="https://contact-ajmal.github.io/DuckView/"><img alt="Try it online" src="https://img.shields.io/badge/Try%20it%20online-contact--ajmal.github.io%2FDuckView-a78bfa?style=for-the-badge&logo=githubpages&logoColor=white"></a>
+</p>
+<p align="center">
+  <sub>Links always point at the <a href="https://github.com/contact-ajmal/DuckView/releases/latest">latest release</a> · no account, nothing else to install, no internet needed after download · <a href="#install-the-desktop-app">install instructions ↓</a> · the online version runs in your browser and is just as private</sub>
 </p>
 
 ---
@@ -94,7 +97,7 @@ Most data tools make you choose between *powerful* and *private*, or between *in
 | Automatic profile on load | **yes** — KPIs, schema stats, preview, charts | dashboards you build | code you write | no | no |
 | Interactive follow-up | **tabbed SQL workbench, charts, exports** | query builder | code cells | SQL editor | REPL |
 | Docs that *run* | **Markdown → live SQL cards** | no | notebooks, not docs | no | no |
-| Output | **static site** — host anywhere, or open from a USB stick — **and a desktop app** (DMG / Windows installer) | hosted service | notebook file / hosted app | native app | static |
+| Output | **static site** (hosted on GitHub Pages, or anywhere) **and a desktop app** (DMG / Windows installer) | hosted service | notebook file / hosted app | native app | static |
 | Formats | **Parquet, CSV, TSV, JSON, NDJSON, Arrow** | via connectors | via libraries | via drivers | Parquet, CSV, JSON |
 | Hardware awareness | **detects cores & RAM, tunes the engine, warns on oversized files** | n/a | manual | manual | manual |
 | Cost | **free, no infrastructure** | per seat / per query | compute | free | free |
@@ -209,9 +212,10 @@ Don't want to run a build or a server? DuckView ships as a **native desktop app*
 
 | Your computer | Download | Size |
 | --- | --- | --- |
-| **Mac with Apple Silicon** (M1, M2, M3, M4 — 2020 or later) | [DuckView-0.1.0-mac-arm64.dmg](https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-arm64.dmg) | 140 MB |
-| **Mac with an Intel processor** | [DuckView-0.1.0-mac-x64.dmg](https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-x64.dmg) | 143 MB |
-| **Windows 10 / 11, 64-bit** | [DuckView-0.1.0-windows-x64-setup.exe](https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-windows-x64-setup.exe) | 118 MB |
+| **Mac with Apple Silicon** (M1, M2, M3, M4 — 2020 or later) | [DuckView-mac-arm64.dmg](https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-arm64.dmg) | ~140 MB |
+| **Mac with an Intel processor** | [DuckView-mac-x64.dmg](https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-x64.dmg) | ~145 MB |
+| **Windows 10 / 11, 64-bit** | [DuckView-windows-x64-setup.exe](https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-windows-x64-setup.exe) | ~120 MB |
+| **Any computer, no install** | [contact-ajmal.github.io/DuckView](https://contact-ajmal.github.io/DuckView/) | runs in the browser — same code, same privacy |
 
 Not sure which Mac you have? Apple menu → *About This Mac*: "Chip: Apple M…" means Apple Silicon; "Processor: Intel…" means Intel.
 
@@ -226,12 +230,15 @@ All versions, release notes and checksums: **[github.com/contact-ajmal/DuckView/
 2. Drag **DuckView** onto **Applications**.
 3. Eject the DuckView disk image (drag it to the Trash, or click ⏏ in Finder's sidebar).
 4. Open **Applications → DuckView**.
-5. **The first time only**, macOS shows *"DuckView" can't be opened because Apple cannot check it for malicious software* (the app isn't signed with an Apple Developer certificate). Either:
-   - **Right-click** (or Control-click) the app → **Open** → **Open** in the dialog, or
-   - go to **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to DuckView, or
-   - in Terminal: `xattr -dr com.apple.quarantine /Applications/DuckView.app`
+5. **The first time only**, macOS will object, because the app isn't signed with a paid Apple Developer certificate. What you see depends on the macOS version:
+   - *"DuckView" can't be opened because Apple could not verify it is free of malware* → **right-click** (or Control-click) the app → **Open** → **Open**. Or **System Settings → Privacy & Security** → scroll down → **Open Anyway**.
+   - *"DuckView" is damaged and can't be opened. You should move it to the Bin* → this is the same thing worded worse (the file isn't damaged). Open **Terminal** and run:
+     ```
+     xattr -cr /Applications/DuckView.app
+     ```
+     then open the app normally.
 
-   After that it opens normally, forever.
+   Either way it's a one-time step; afterwards it opens like any other app.
 6. Drop a Parquet / CSV / JSON / Arrow file onto the window. That's it.
 
 </details>
@@ -255,11 +262,11 @@ Every release includes `SHA256SUMS.txt`. Compare it with what you downloaded:
 
 ```bash
 # macOS
-shasum -a 256 ~/Downloads/DuckView-0.1.0-mac-arm64.dmg
+shasum -a 256 ~/Downloads/DuckView-mac-arm64.dmg
 ```
 ```powershell
 # Windows (PowerShell)
-Get-FileHash "$env:USERPROFILE\Downloads\DuckView-0.1.0-windows-x64-setup.exe" -Algorithm SHA256
+Get-FileHash "$env:USERPROFILE\Downloads\DuckView-windows-x64-setup.exe" -Algorithm SHA256
 ```
 
 ### What the app does with your data
@@ -360,6 +367,8 @@ The navbar pill always shows the engine state, detected cores, current memory he
 ## Deploying
 
 `dist/` is static. Copy it to any web server, object storage bucket, GitHub Pages, Netlify, an intranet share, or a USB stick.
+
+This repository deploys itself to **GitHub Pages** on every push to `main` via [`.github/workflows/pages.yml`](.github/workflows/pages.yml): **https://contact-ajmal.github.io/DuckView/**. Nothing about the hosted copy is different — your files still never leave your browser.
 
 - **Single-threaded engine (default):** works everywhere with no configuration.
 - **Multi-threaded engine:** needs the page to be cross-origin isolated. Either send two headers from your host —
