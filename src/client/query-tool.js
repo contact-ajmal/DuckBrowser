@@ -352,7 +352,7 @@ export class QueryTool {
 
   #sqlHeader() {
     const ds = this.engine.activeId ? `${this.engine.activeId} (${this.engine.datasets.get(this.engine.activeId)?.file ?? ''})` : 'none';
-    return `-- Duckview query export\n-- exported: ${new Date().toISOString()}\n-- active dataset: ${ds}\n\n`;
+    return `-- DuckView query export\n-- exported: ${new Date().toISOString()}\n-- active dataset: ${ds}\n\n`;
   }
 
   // -----------------------------------------------------------------------
@@ -900,7 +900,7 @@ export function splitTabs(text) {
 
 /** Drop the header comment our own exports write, so re-imports stay clean. */
 function stripExportHeader(sql) {
-  return sql.replace(/^(--\s*(?:Duckview|QuillDB) query( export)?\n(--.*\n)*\n?)/, '');
+  return sql.replace(/^(--\s*(?:DuckView|QuillDB) query( export)?\n(--.*\n)*\n?)/, '');
 }
 
 function cancelledBox(ms) {

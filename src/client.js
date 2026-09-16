@@ -1,5 +1,5 @@
 /**
- * Duckview client entry point.
+ * DuckView client entry point.
  *
  * Boots DuckDB-Wasm in a Web Worker and wires the three routed views:
  *
@@ -49,7 +49,7 @@ async function ensureCrossOriginIsolation() {
     location.reload();
     return true;
   } catch (err) {
-    console.warn('[Duckview] cross-origin isolation service worker unavailable:', err);
+    console.warn('[DuckView] cross-origin isolation service worker unavailable:', err);
     return false;
   }
 }
@@ -186,7 +186,7 @@ const bootAndMount = (async () => {
     if (rec) mounted.push(rec);
   }
   if (mounted.length) {
-    console.info(`%c🦆 Duckview%c mounted ${mounted.length} sample dataset(s): ${mounted.map((r) => r.id).join(', ')}`, 'color:#a78bfa;font-weight:600', 'color:inherit');
+    console.info(`%c🦆 DuckView%c mounted ${mounted.length} sample dataset(s): ${mounted.map((r) => r.id).join(', ')}`, 'color:#a78bfa;font-weight:600', 'color:inherit');
   }
   if (!engine.activeId) overview.renderEmpty('Drop a file to get started.');
   return mounted;
@@ -209,4 +209,4 @@ window.addEventListener('hashchange', async () => {
 });
 
 // Handy for poking around in DevTools.
-window.Duckview = { engine, router, overview, queryTool, docs, settingsPage, settings, panel, DuckQuery, manifest };
+window.DuckView = { engine, router, overview, queryTool, docs, settingsPage, settings, panel, DuckQuery, manifest };

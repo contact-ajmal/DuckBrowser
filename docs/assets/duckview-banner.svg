@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" width="960" height="260" role="img" aria-label="DuckView — local-first data workspace on DuckDB-Wasm">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#09090b"/>
+      <stop offset="1" stop-color="#151321"/>
+    </linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c4b5fd"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.22" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7c3aed" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="260" rx="28" fill="url(#bg)"/>
+  <rect width="960" height="260" rx="28" fill="url(#glow)"/>
+  <rect x="1" y="1" width="958" height="258" rx="27" fill="none" stroke="#27272a" stroke-width="2"/>
+  <!-- decorative chart (kept clear of the wordmark) -->
+  <g transform="translate(728,20) scale(0.85)">
+    <g stroke="#27272a" stroke-width="1" opacity="0.6">
+      <line x1="0" y1="90" x2="260" y2="90"/><line x1="0" y1="140" x2="260" y2="140"/><line x1="0" y1="190" x2="260" y2="190"/>
+    </g>
+    <g fill="#7c3aed" opacity="0.35">
+      <rect x="8" y="150" width="20" height="70" rx="4"/><rect x="48" y="125" width="20" height="95" rx="4"/><rect x="88" y="160" width="20" height="60" rx="4"/><rect x="128" y="105" width="20" height="115" rx="4"/><rect x="168" y="135" width="20" height="85" rx="4"/><rect x="208" y="80" width="20" height="140" rx="4"/>
+    </g>
+    <path d="M18 200 L58 168 L98 178 L138 132 L178 146 L218 96 L250 110" fill="none" stroke="#3987e5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <g fill="#3987e5" stroke="#09090b" stroke-width="2">
+      <circle cx="18" cy="200" r="5"/><circle cx="58" cy="168" r="5"/><circle cx="98" cy="178" r="5"/><circle cx="138" cy="132" r="5"/><circle cx="178" cy="146" r="5"/><circle cx="218" cy="96" r="5"/><circle cx="250" cy="110" r="5"/>
+    </g>
+  </g>
+  <!-- mark -->
+  <g transform="translate(48,50) scale(1.25)">
+    <rect width="128" height="128" rx="28" fill="#18181b"/>
+    <rect x="1" y="1" width="126" height="126" rx="27" fill="none" stroke="#3f3f46" stroke-width="2"/>
+    <g fill="#7c3aed" opacity="0.28">
+      <rect x="22" y="96" width="12" height="14" rx="3"/><rect x="40" y="88" width="12" height="22" rx="3"/><rect x="58" y="92" width="12" height="18" rx="3"/><rect x="76" y="82" width="12" height="28" rx="3"/><rect x="94" y="90" width="12" height="20" rx="3"/>
+    </g>
+    <path d="M84 66 L106 50 L96 74 Z" fill="url(#g)"/>
+    <path d="M30 72 C30 58 44 52 62 52 L88 52 C98 52 104 62 100 74 C96 86 82 90 64 90 C46 90 30 86 30 72 Z" fill="url(#g)"/>
+    <circle cx="46" cy="44" r="18" fill="url(#g)"/>
+    <path d="M30 42 L12 48 L30 54 Z" fill="#f59e0b"/>
+    <circle cx="42" cy="40" r="3.2" fill="#09090b"/>
+    <circle cx="43" cy="39" r="1" fill="#fafafa"/>
+    <path d="M56 66 C64 60 78 60 88 66 C80 74 66 76 56 66 Z" fill="#09090b" opacity="0.22"/>
+  </g>
+  <!-- wordmark -->
+  <text x="240" y="128" font-family="-apple-system, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="-1.5" fill="#fafafa">Duck<tspan fill="#a78bfa">View</tspan></text>
+  <text x="243" y="170" font-family="-apple-system, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="22" fill="#a1a1aa">Local-first data workspace on DuckDB-Wasm</text>
+  <g font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#71717a">
+    <text x="243" y="206">zero cloud · zero configuration · nothing leaves the tab</text>
+  </g>
+</svg>

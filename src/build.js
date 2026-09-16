@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Duckview build pipeline.
+ * DuckView build pipeline.
  *
  *   content/*.md  ──marked──▶  dist/index.html  (docs view; ```sql fences → <duck-query>)
  *   data/*        ──copy───▶  dist/data/        (+ dist/manifest.json)
@@ -339,7 +339,7 @@ function buildTailwind(input, output) {
 // ---------------------------------------------------------------------------
 async function build() {
   const t0 = Date.now();
-  console.log(`\n🦆  ${c.bold('Duckview build')} ${c.dim(`v${pkg.version}`)}`);
+  console.log(`\n🦆  ${c.bold('DuckView build')} ${c.dim(`v${pkg.version}`)}`);
 
   step(1, 'Clean output directory');
   await fs.emptyDir(DIRS.dist);
@@ -400,8 +400,8 @@ async function build() {
   const template = await fs.readFile(path.join(DIRS.src, 'template.html'), 'utf8');
   const config = pkg.duckview ?? {};
   const manifest = {
-    name: 'Duckview',
-    title: config.title || 'Duckview',
+    name: 'DuckView',
+    title: config.title || 'DuckView',
     version: pkg.version,
     description: config.description || pkg.description,
     // Samples are listed but only mounted on request unless `autoload` is set.

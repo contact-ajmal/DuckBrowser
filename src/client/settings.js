@@ -4,7 +4,7 @@
  * Two groups:
  *   engine.*   DuckDB settings applied live via SET (memory_limit, threads, …)
  *              `null` means "auto" — use the hardware-derived default.
- *   the rest   Duckview behaviour (row limits, overview profile, thresholds…)
+ *   the rest   DuckView behaviour (row limits, overview profile, thresholds…)
  */
 
 const KEY = 'duckview.settings';
@@ -114,7 +114,7 @@ class Settings {
       try {
         fn(path, value);
       } catch (e) {
-        console.error('[Duckview] settings listener threw', e);
+        console.error('[DuckView] settings listener threw', e);
       }
     }
   }

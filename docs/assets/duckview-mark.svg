@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="DuckView mark">
+  <defs>
+    <linearGradient id="dv-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c4b5fd"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#18181b"/>
+  <rect x="1" y="1" width="126" height="126" rx="27" fill="none" stroke="#3f3f46" stroke-width="2"/>
+  <!-- data bars the duck floats on -->
+  <g fill="#7c3aed" opacity="0.28">
+    <rect x="22" y="96" width="12" height="14" rx="3"/>
+    <rect x="40" y="88" width="12" height="22" rx="3"/>
+    <rect x="58" y="92" width="12" height="18" rx="3"/>
+    <rect x="76" y="82" width="12" height="28" rx="3"/>
+    <rect x="94" y="90" width="12" height="20" rx="3"/>
+  </g>
+  <!-- tail -->
+  <path d="M84 66 L106 50 L96 74 Z" fill="url(#dv-g)"/>
+  <!-- body -->
+  <path d="M30 72 C30 58 44 52 62 52 L88 52 C98 52 104 62 100 74 C96 86 82 90 64 90 C46 90 30 86 30 72 Z" fill="url(#dv-g)"/>
+  <!-- head -->
+  <circle cx="46" cy="44" r="18" fill="url(#dv-g)"/>
+  <!-- beak -->
+  <path d="M30 42 L12 48 L30 54 Z" fill="#f59e0b"/>
+  <!-- eye -->
+  <circle cx="42" cy="40" r="3.2" fill="#09090b"/>
+  <circle cx="43" cy="39" r="1" fill="#fafafa"/>
+  <!-- wing -->
+  <path d="M56 66 C64 60 78 60 88 66 C80 74 66 76 56 66 Z" fill="#09090b" opacity="0.22"/>
+</svg>
