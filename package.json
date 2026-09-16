@@ -5,29 +5,35 @@
   "license": "MIT",
   "private": true,
   "type": "module",
+  "main": "desktop/main.js",
   "scripts": {
     "data": "node scripts/generate-data.js",
     "build": "node src/build.js",
     "dev": "serve dist -l 4173 -n",
     "start": "npm run build && npm run dev",
     "test": "npm run build && node scripts/smoke-test.mjs",
-    "test:live": "node scripts/smoke-test.mjs --url http://localhost:4173"
+    "test:live": "node scripts/smoke-test.mjs --url http://localhost:4173",
+    "desktop": "npm run build && electron .",
+    "dist:mac": "npm run build && electron-builder --mac --arm64 --x64 --publish never",
+    "dist:win": "npm run build && electron-builder --win --x64 --publish never",
+    "dist:all": "npm run build && electron-builder --mac --win --publish never"
   },
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {
-    "@duckdb/duckdb-wasm": "^1.29.0",
-    "chart.js": "^4.4.0",
-    "fs-extra": "^11.2.0",
-    "marked": "^15.0.0",
-    "prismjs": "^1.29.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@duckdb/duckdb-wasm": "^1.29.0",
     "@tailwindcss/cli": "^4.1.0",
     "apache-arrow": "^17.0.0",
+    "chart.js": "^4.4.0",
+    "electron": "^44.4.1",
+    "electron-builder": "^26.15.3",
     "esbuild": "^0.28.2",
+    "fs-extra": "^11.2.0",
+    "marked": "^15.0.0",
     "playwright-core": "^1.63.0",
+    "prismjs": "^1.29.0",
     "serve": "^14.2.0",
     "tailwindcss": "^4.1.0"
   },
@@ -35,5 +41,73 @@
     "title": "DuckView",
     "autoload": false,
     "defaultDataset": "sales"
+  },
+  "build": {
+    "appId": "com.duckview.app",
+    "productName": "DuckView",
+    "copyright": "Copyright \u00a9 2026 Ajmal Baba",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "desktop/**/*",
+      "dist/**/*",
+      "package.json",
+      "!**/node_modules/**"
+    ],
+    "asar": true,
+    "compression": "normal",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "darkModeSupport": true,
+      "identity": null,
+      "hardenedRuntime": false,
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "contents": [
+        {
+          "x": 140,
+          "y": 190,
+          "type": "file"
+        },
+        {
+          "x": 420,
+          "y": 190,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "artifactName": "${productName}-${version}-windows-${arch}-setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "DuckView"
+    }
   }
 }

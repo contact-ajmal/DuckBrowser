@@ -10,6 +10,7 @@
   <img alt="Output: static site" src="https://img.shields.io/badge/output-static%20site-0ea5e9">
   <img alt="Smoke test: 87 checks" src="https://img.shields.io/badge/smoke%20test-87%20checks-22c55e">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://github.com/contact-ajmal/DuckView/releases"><img alt="Desktop app: macOS + Windows" src="https://img.shields.io/badge/desktop%20app-macOS%20%7C%20Windows-8b5cf6?logo=electron&logoColor=white"></a>
 </p>
 
 <p align="center">
@@ -57,6 +58,7 @@ There is no server. There is no account. There is no upload. The `dist/` folder 
 - [The four pages](#the-four-pages)
 - [How it works](#how-it-works)
 - [Quick start](#quick-start)
+- [Desktop app](#desktop-app)
 - [Bring your data](#bring-your-data)
 - [Write docs with live SQL](#write-docs-with-live-sql)
 - [Resources, limits and the honest numbers](#resources-limits-and-the-honest-numbers)
@@ -83,7 +85,7 @@ Most data tools make you choose between *powerful* and *private*, or between *in
 | Automatic profile on load | **yes** — KPIs, schema stats, preview, charts | dashboards you build | code you write | no | no |
 | Interactive follow-up | **tabbed SQL workbench, charts, exports** | query builder | code cells | SQL editor | REPL |
 | Docs that *run* | **Markdown → live SQL cards** | no | notebooks, not docs | no | no |
-| Output | **static site** — host anywhere, or open from a USB stick | hosted service | notebook file / hosted app | none | static |
+| Output | **static site** — host anywhere, or open from a USB stick — **and a desktop app** (DMG / Windows installer) | hosted service | notebook file / hosted app | native app | static |
 | Formats | **Parquet, CSV, TSV, JSON, NDJSON, Arrow** | via connectors | via libraries | via drivers | Parquet, CSV, JSON |
 | Hardware awareness | **detects cores & RAM, tunes the engine, warns on oversized files** | n/a | manual | manual | manual |
 | Cost | **free, no infrastructure** | per seat / per query | compute | free | free |
@@ -190,6 +192,37 @@ Then open the URL, drop a file onto the page, and read.
 
 > **Requirements:** Node 18+ for the build. Any browser from the last few years for the site (Chrome, Edge, Firefox, Safari — WebAssembly with exception handling). No Python, no Docker, no database server.
 
+## Desktop app
+
+Don't want to run a build or a server? DuckView also ships as a **native desktop app** — the same site wrapped in an Electron shell, so it opens like any other application and works with no network at all.
+
+**Download** from the [Releases page](https://github.com/contact-ajmal/DuckView/releases):
+
+| Platform | File | Notes |
+| --- | --- | --- |
+| macOS · Apple Silicon (M1–M4) | `DuckView-<version>-mac-arm64.dmg` | Open the DMG, drag DuckView to Applications |
+| macOS · Intel | `DuckView-<version>-mac-x64.dmg` | same |
+| Windows 10 / 11 · 64-bit | `DuckView-<version>-windows-x64-setup.exe` | Standard installer; choose the folder, get a desktop shortcut |
+
+The builds are **not code-signed** (that needs a paid Apple Developer / Windows certificate), so the operating system shows a warning the first time:
+
+- **macOS:** *"DuckView can't be opened because Apple cannot check it for malicious software."* → Right-click the app → **Open** → Open. Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/DuckView.app`.
+- **Windows:** SmartScreen → **More info** → **Run anyway**.
+
+Every release also includes `SHA256SUMS.txt` so you can verify what you downloaded.
+
+What the desktop app does differently from the website: nothing you'd notice. It serves the same `dist/` bundle over a private `duckview://` scheme with correct MIME types, byte-range support (so Parquet samples are read by column) and cross-origin-isolation headers (so the opt-in multi-threaded engine is available), in a sandboxed renderer with no Node access. Downloads open the native *Save as…* dialog; external links open in your default browser. Nothing is sent anywhere.
+
+**Build the installers yourself**
+
+```bash
+npm run dist:mac    # release/DuckView-<version>-mac-{arm64,x64}.dmg
+npm run dist:win    # release/DuckView-<version>-windows-x64-setup.exe   (also works on a Mac)
+npm run desktop     # just run the app from the source tree
+```
+
+Releases are produced by [`.github/workflows/release.yml`](.github/workflows/release.yml): pushing a `v*` tag runs the smoke test, builds natively on macOS and Windows runners, and attaches the installers plus checksums to a GitHub Release.
+
 ## Bring your data
 
 Drop files anywhere on the Overview page, or use *Choose a file…*. Drop several at once; the first becomes active.
@@ -291,6 +324,9 @@ Add `?debug` to the URL when testing by hand to get DuckDB's own console logger.
 
 ```
 content/               Markdown doc pages (front matter: title, description, order)
+desktop/main.js        Electron shell (private duckview:// scheme, range support, isolation headers)
+build/icon.png         App icon source (electron-builder derives .icns / .ico)
+.github/workflows/     release.yml — test + build installers on tag push
 data/                  Sample datasets — each file is offered as a sample, mounted on request
 docs/                  README assets (brand SVGs, screenshots)
 scripts/
@@ -321,6 +357,7 @@ src/
     toast.js           Notifications
     format.js          Formatting and type helpers
 dist/                  Build output (static, ~80 MB: two wasm engines, extensions, libraries)
+release/               Desktop installers (electron-builder output, git-ignored)
 ```
 
 ## Configuration
