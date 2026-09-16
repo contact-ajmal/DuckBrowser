@@ -34,8 +34,9 @@ const check = (cond, label, detail = '') => {
 // ---------------------------------------------------------------------------
 let server = null;
 if (!BASE) {
-  const bin = path.join(ROOT, 'node_modules', '.bin', process.platform === 'win32' ? 'serve.cmd' : 'serve');
-  server = spawn(bin, ['dist', '-l', String(PORT), '-n'], { cwd: ROOT, stdio: 'ignore' });
+  // Spawn serve's JS entry through Node (Windows can't spawn .cmd shims without a shell).
+  const serveEntry = path.join(ROOT, 'node_modules', 'serve', 'build', 'main.js');
+  server = spawn(process.execPath, [serveEntry, 'dist', '-l', String(PORT), '-n'], { cwd: ROOT, stdio: 'ignore' });
   BASE = `http://localhost:${PORT}`;
   const t0 = Date.now();
   while (Date.now() - t0 < 10000) {

@@ -330,8 +330,12 @@ function renderShell({ template, pages, manifest }) {
 // Tailwind
 // ---------------------------------------------------------------------------
 function buildTailwind(input, output) {
-  const bin = path.join(ROOT, 'node_modules', '.bin', process.platform === 'win32' ? 'tailwindcss.cmd' : 'tailwindcss');
-  execFileSync(bin, ['-i', input, '-o', output, '--minify'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
+  // Run the CLI's JS entry through Node rather than the .cmd/.sh shim in
+  // node_modules/.bin — Node refuses to spawn .cmd files without a shell on Windows.
+  const cliPkg = path.join(ROOT, 'node_modules', '@tailwindcss', 'cli');
+  const binField = fs.readJsonSync(path.join(cliPkg, 'package.json')).bin;
+  const entry = path.join(cliPkg, typeof binField === 'string' ? binField : binField.tailwindcss);
+  execFileSync(process.execPath, [entry, '-i', input, '-o', output, '--minify'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
 }
 
 // ---------------------------------------------------------------------------
