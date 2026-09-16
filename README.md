@@ -9,6 +9,7 @@
   <img alt="Network requests at runtime: 0" src="https://img.shields.io/badge/network%20requests-0-22c55e">
   <img alt="Output: static site" src="https://img.shields.io/badge/output-static%20site-0ea5e9">
   <img alt="Smoke test: 87 checks" src="https://img.shields.io/badge/smoke%20test-87%20checks-22c55e">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
 <p align="center">
@@ -66,6 +67,7 @@ There is no server. There is no account. There is no upload. The `dist/` folder 
 - [Configuration](#configuration)
 - [Known limitations and roadmap](#known-limitations-and-roadmap)
 - [Built with](#built-with)
+- [License](#license)
 
 ---
 
@@ -352,6 +354,10 @@ Per-visitor preferences live in the Settings page. Deep links: `#/query?ds=order
 ## Built with
 
 [DuckDB](https://duckdb.org) and [DuckDB-Wasm](https://github.com/duckdb/duckdb-wasm) · [Apache Arrow](https://arrow.apache.org) · [Chart.js](https://www.chartjs.org) · [Prism](https://prismjs.com) · [Tailwind CSS](https://tailwindcss.com) · [marked](https://marked.js.org) · [esbuild](https://esbuild.github.io) · [serve](https://github.com/vercel/serve) · [Playwright](https://playwright.dev) for the smoke test.
+
+## License
+
+[MIT](LICENSE) © 2026 Ajmal Baba. DuckDB, Apache Arrow, Chart.js, Prism, Tailwind CSS and the other bundled libraries remain under their own licenses.
 
 <p align="center">
   <img src="docs/assets/duckview-mark.svg" alt="" width="40"><br>
