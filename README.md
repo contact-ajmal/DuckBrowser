@@ -18,6 +18,15 @@
   <sub>Instant, hardware-aware analytics on your own computer — zero cloud compute, zero configuration, complete data privacy.</sub>
 </p>
 
+<p align="center">
+  <a href="https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-arm64.dmg"><img alt="Download for macOS (Apple Silicon)" src="https://img.shields.io/badge/Download-macOS%20Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-x64.dmg"><img alt="Download for macOS (Intel)" src="https://img.shields.io/badge/Download-macOS%20Intel-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-windows-x64-setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white"></a>
+</p>
+<p align="center">
+  <sub>Version 0.1.0 · <a href="https://github.com/contact-ajmal/DuckView/releases/latest">all releases</a> · no account, no install of anything else, no internet needed after download · <a href="#install-the-desktop-app">install instructions ↓</a></sub>
+</p>
+
 ---
 
 **DuckView** turns a folder of Markdown and data files into a static website that runs a full analytical database — [DuckDB](https://duckdb.org), compiled to WebAssembly — inside the browser tab. Open it, drop in a Parquet, CSV, JSON or Arrow file, and within a second you have a schema with per-column statistics, KPIs, a preview and distribution charts. Every one of those is a real SQL query you can open in a tabbed workbench and keep going.
@@ -58,7 +67,7 @@ There is no server. There is no account. There is no upload. The `dist/` folder 
 - [The four pages](#the-four-pages)
 - [How it works](#how-it-works)
 - [Quick start](#quick-start)
-- [Desktop app](#desktop-app)
+- [Desktop app](#desktop-app) — [download](#download) · [install](#install-the-desktop-app)
 - [Bring your data](#bring-your-data)
 - [Write docs with live SQL](#write-docs-with-live-sql)
 - [Resources, limits and the honest numbers](#resources-limits-and-the-honest-numbers)
@@ -194,34 +203,86 @@ Then open the URL, drop a file onto the page, and read.
 
 ## Desktop app
 
-Don't want to run a build or a server? DuckView also ships as a **native desktop app** — the same site wrapped in an Electron shell, so it opens like any other application and works with no network at all.
+Don't want to run a build or a server? DuckView ships as a **native desktop app** — the same workspace wrapped in an Electron shell, so it opens like any other application and works with no network at all. Download, install, drop a file.
 
-**Download** from the [Releases page](https://github.com/contact-ajmal/DuckView/releases):
+### Download
 
-| Platform | File | Notes |
+| Your computer | Download | Size |
 | --- | --- | --- |
-| macOS · Apple Silicon (M1–M4) | `DuckView-<version>-mac-arm64.dmg` | Open the DMG, drag DuckView to Applications |
-| macOS · Intel | `DuckView-<version>-mac-x64.dmg` | same |
-| Windows 10 / 11 · 64-bit | `DuckView-<version>-windows-x64-setup.exe` | Standard installer; choose the folder, get a desktop shortcut |
+| **Mac with Apple Silicon** (M1, M2, M3, M4 — 2020 or later) | [DuckView-0.1.0-mac-arm64.dmg](https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-arm64.dmg) | 140 MB |
+| **Mac with an Intel processor** | [DuckView-0.1.0-mac-x64.dmg](https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-mac-x64.dmg) | 143 MB |
+| **Windows 10 / 11, 64-bit** | [DuckView-0.1.0-windows-x64-setup.exe](https://github.com/contact-ajmal/DuckView/releases/download/v0.1.0/DuckView-0.1.0-windows-x64-setup.exe) | 118 MB |
 
-The builds are **not code-signed** (that needs a paid Apple Developer / Windows certificate), so the operating system shows a warning the first time:
+Not sure which Mac you have? Apple menu → *About This Mac*: "Chip: Apple M…" means Apple Silicon; "Processor: Intel…" means Intel.
 
-- **macOS:** *"DuckView can't be opened because Apple cannot check it for malicious software."* → Right-click the app → **Open** → Open. Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/DuckView.app`.
-- **Windows:** SmartScreen → **More info** → **Run anyway**.
+All versions, release notes and checksums: **[github.com/contact-ajmal/DuckView/releases](https://github.com/contact-ajmal/DuckView/releases)**. The link [`/releases/latest`](https://github.com/contact-ajmal/DuckView/releases/latest) always points at the newest version.
 
-Every release also includes `SHA256SUMS.txt` so you can verify what you downloaded.
+### Install the desktop app
 
-What the desktop app does differently from the website: nothing you'd notice. It serves the same `dist/` bundle over a private `duckview://` scheme with correct MIME types, byte-range support (so Parquet samples are read by column) and cross-origin-isolation headers (so the opt-in multi-threaded engine is available), in a sandboxed renderer with no Node access. Downloads open the native *Save as…* dialog; external links open in your default browser. Nothing is sent anywhere.
+<details open>
+<summary><strong>macOS</strong></summary>
 
-**Build the installers yourself**
+1. Open the downloaded `.dmg`. A window appears with the DuckView icon and an *Applications* folder.
+2. Drag **DuckView** onto **Applications**.
+3. Eject the DuckView disk image (drag it to the Trash, or click ⏏ in Finder's sidebar).
+4. Open **Applications → DuckView**.
+5. **The first time only**, macOS shows *"DuckView" can't be opened because Apple cannot check it for malicious software* (the app isn't signed with an Apple Developer certificate). Either:
+   - **Right-click** (or Control-click) the app → **Open** → **Open** in the dialog, or
+   - go to **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to DuckView, or
+   - in Terminal: `xattr -dr com.apple.quarantine /Applications/DuckView.app`
+
+   After that it opens normally, forever.
+6. Drop a Parquet / CSV / JSON / Arrow file onto the window. That's it.
+
+</details>
+
+<details open>
+<summary><strong>Windows</strong></summary>
+
+1. Run the downloaded `DuckView-…-setup.exe`.
+2. **SmartScreen** shows *Windows protected your PC* because the installer isn't signed with a code-signing certificate. Click **More info** → **Run anyway**.
+3. Follow the installer: choose the folder (default is fine), and whether you want a desktop shortcut.
+4. Launch **DuckView** from the Start menu or the desktop shortcut.
+5. Drop a Parquet / CSV / JSON / Arrow file onto the window.
+
+To uninstall: *Settings → Apps → DuckView → Uninstall* (or Control Panel → Programs).
+
+</details>
+
+### Verify a download (optional)
+
+Every release includes `SHA256SUMS.txt`. Compare it with what you downloaded:
+
+```bash
+# macOS
+shasum -a 256 ~/Downloads/DuckView-0.1.0-mac-arm64.dmg
+```
+```powershell
+# Windows (PowerShell)
+Get-FileHash "$env:USERPROFILE\Downloads\DuckView-0.1.0-windows-x64-setup.exe" -Algorithm SHA256
+```
+
+### What the app does with your data
+
+Nothing you'd have to trust it with. Files you drop in are read by DuckDB inside the app's window through the browser File API — never copied elsewhere, never uploaded. The app makes **no network requests**: the analytics engine, its extensions and every library are inside the installer, so it works on a machine with no internet at all. Downloads (CSV / Parquet / JSON / `.sql`) open the native *Save as…* dialog; links open in your default browser.
+
+Under the hood the app serves the same `dist/` bundle as the website over a private `duckview://` scheme with correct MIME types, byte-range support (so Parquet samples are read by column) and cross-origin-isolation headers (so the opt-in multi-threaded engine is available), in a sandboxed renderer with no Node access.
+
+### System requirements
+
+- macOS 11 Big Sur or later (Apple Silicon or Intel) · Windows 10 or 11, 64-bit
+- ~400 MB of disk space; RAM as you like — the engine uses up to 4 GB (see [Resources](#resources-limits-and-the-honest-numbers))
+- No other software needed
+
+### Build the installers yourself
 
 ```bash
 npm run dist:mac    # release/DuckView-<version>-mac-{arm64,x64}.dmg
-npm run dist:win    # release/DuckView-<version>-windows-x64-setup.exe   (also works on a Mac)
+npm run dist:win    # release/DuckView-<version>-windows-x64-setup.exe   (works on a Mac too)
 npm run desktop     # just run the app from the source tree
 ```
 
-Releases are produced by [`.github/workflows/release.yml`](.github/workflows/release.yml): pushing a `v*` tag runs the smoke test, builds natively on macOS and Windows runners, and attaches the installers plus checksums to a GitHub Release.
+Releases are produced by [`.github/workflows/release.yml`](.github/workflows/release.yml): pushing a `v*` tag runs the smoke test, builds natively on macOS and Windows runners, and attaches the installers plus `SHA256SUMS.txt` to a GitHub Release.
 
 ## Bring your data
 
