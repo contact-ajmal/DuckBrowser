@@ -1,5 +1,5 @@
 # Publishes the static site (dist/) to GitHub Pages on every push to main.
-#   https://contact-ajmal.github.io/DuckView/
+#   https://contact-ajmal.github.io/Duckbrowser/
 # Pages doesn't send COOP/COEP headers, so the default single-threaded engine is
 # used; the opt-in threaded engine still works via the bundled service worker.
 name: Deploy to GitHub Pages

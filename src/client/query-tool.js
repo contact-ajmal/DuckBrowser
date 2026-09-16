@@ -16,13 +16,13 @@ import { FORMAT_LABEL } from './engine.js';
 import { fmtMs, fmtInt, fmtBytes, escapeHtml, arrowKind, isTemporalType, isTextType, isNumericType, isNestedType, qid } from './format.js';
 import { settings } from './settings.js';
 
-const TABS_KEY = 'duckview.query.tabs';
-const LEGACY_DRAFT_KEY = 'duckview.query.sql';
-const HISTORY_KEY = 'duckview.query.history';
+const TABS_KEY = 'duckbrowser.query.tabs';
+const LEGACY_DRAFT_KEY = 'duckbrowser.query.sql';
+const HISTORY_KEY = 'duckbrowser.query.history';
 const historyMax = () => Number(settings.get('historyMax')) || 40;
 const MAX_TABS = 24;
 /** Marker used by "Export all" so an import can split the file back into tabs. */
-const TAB_MARKER = /^--\s*@(?:duckview|quilldb)-tab:\s*(.+?)\s*$/; // "quilldb" = files exported before the rename
+const TAB_MARKER = /^--\s*@(?:duckbrowser|duckview|quilldb)-tab:\s*(.+?)\s*$/; // older names = files exported before the renames
 
 const DEFAULT_SQL = `-- Query the active dataset (alias "dataset") or any mounted view by name.
 -- ⌘/Ctrl + Enter runs this tab. Open more tabs to run queries side by side.
@@ -314,9 +314,9 @@ export class QueryTool {
     this.#syncEditor();
     const body = this.tabs
       .filter((t) => t.sql.trim())
-      .map((t) => `-- @duckview-tab: ${t.name}\n${t.sql.trim()}\n`)
+      .map((t) => `-- @duckbrowser-tab: ${t.name}\n${t.sql.trim()}\n`)
       .join('\n');
-    const name = `duckview-queries-${stamp()}.sql`;
+    const name = `duckbrowser-queries-${stamp()}.sql`;
     downloadBlob(new Blob([this.#sqlHeader() + body], { type: 'application/sql;charset=utf-8' }), name);
     this.#flash(`Saved ${name} (${this.#tabs.size} tabs — import it to restore them)`);
   }
@@ -352,7 +352,7 @@ export class QueryTool {
 
   #sqlHeader() {
     const ds = this.engine.activeId ? `${this.engine.activeId} (${this.engine.datasets.get(this.engine.activeId)?.file ?? ''})` : 'none';
-    return `-- DuckView query export\n-- exported: ${new Date().toISOString()}\n-- active dataset: ${ds}\n\n`;
+    return `-- Duckbrowser query export\n-- exported: ${new Date().toISOString()}\n-- active dataset: ${ds}\n\n`;
   }
 
   // -----------------------------------------------------------------------
@@ -876,7 +876,7 @@ class Tab {
   }
 }
 
-/** Split a .sql file on "-- @duckview-tab: name" markers; no markers → one part. */
+/** Split a .sql file on "-- @duckbrowser-tab: name" markers; no markers → one part. */
 export function splitTabs(text) {
   const lines = text.split(/\r?\n/);
   const parts = [];
@@ -900,7 +900,7 @@ export function splitTabs(text) {
 
 /** Drop the header comment our own exports write, so re-imports stay clean. */
 function stripExportHeader(sql) {
-  return sql.replace(/^(--\s*(?:DuckView|QuillDB) query( export)?\n(--.*\n)*\n?)/, '');
+  return sql.replace(/^(--\s*(?:Duckbrowser|DuckView|QuillDB) query( export)?\n(--.*\n)*\n?)/, '');
 }
 
 function cancelledBox(ms) {

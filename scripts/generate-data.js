@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * DuckView — sample dataset generator.
+ * Duckbrowser — sample dataset generator.
  *
  * Produces deterministic sample data in /data, one file per supported format:
  *   sales.csv        CSV       ~6k rows   orders with dates, regions, products
@@ -290,7 +290,7 @@ const log = (msg) => console.log(`  ${msg}`);
 const sizeOf = (p) => `${(fs.statSync(p).size / 1024).toFixed(1)} KB`;
 
 async function main() {
-  console.log('\n🦆  DuckView — generating sample datasets\n');
+  console.log('\n🦆  Duckbrowser — generating sample datasets\n');
   await fs.ensureDir(DATA_DIR);
 
   // --- CSV
@@ -322,7 +322,7 @@ async function main() {
   const db = await openDuckDB();
   const conn = db.connect();
   const orders = buildOrders();
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'duckview-'));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'duckbrowser-'));
   const tmpParquet = path.join(tmpDir, 'orders.parquet');
   const ordersPath = path.join(DATA_DIR, 'orders.parquet');
   db.registerFileText('orders_tmp.csv', toDelimited(orders, ','));

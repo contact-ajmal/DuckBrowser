@@ -1,5 +1,5 @@
 /**
- * DuckView client entry point.
+ * Duckbrowser client entry point.
  *
  * Boots DuckDB-Wasm in a Web Worker and wires the three routed views:
  *
@@ -9,7 +9,7 @@
  *
  * The workspace starts empty: you upload your own files. The datasets bundled
  * with the build are listed as samples and mounted only on request (or at boot
- * when `duckview.autoload` is set in package.json).
+ * when `duckbrowser.autoload` is set in package.json).
  */
 import { Engine } from './client/engine.js';
 import { DuckQuery } from './client/duck-query.js';
@@ -22,7 +22,7 @@ import { StatusBar } from './client/status.js';
 import { SettingsPage } from './client/settings-page.js';
 import { settings } from './client/settings.js';
 
-const manifest = window.__DUCKVIEW__ ?? { datasets: [], pages: [], autoload: false, defaultDataset: null };
+const manifest = window.__DUCKBROWSER__ ?? { datasets: [], pages: [], autoload: false, defaultDataset: null };
 const params = new URLSearchParams(location.search);
 
 /**
@@ -35,7 +35,7 @@ async function ensureCrossOriginIsolation() {
   const wantThreads = ['threaded', 'auto'].includes(eng.bundle);
   if (globalThis.crossOriginIsolated || !wantThreads || !eng.coiServiceWorker) return false;
   if (!('serviceWorker' in navigator) || !window.isSecureContext) return false;
-  const FLAG = 'duckview.coi.reloaded';
+  const FLAG = 'duckbrowser.coi.reloaded';
   try {
     if (sessionStorage.getItem(FLAG)) return false; // already tried once this session — headers still missing
     const reg = await navigator.serviceWorker.register('./coi-sw.js', { scope: './' });
@@ -49,7 +49,7 @@ async function ensureCrossOriginIsolation() {
     location.reload();
     return true;
   } catch (err) {
-    console.warn('[DuckView] cross-origin isolation service worker unavailable:', err);
+    console.warn('[Duckbrowser] cross-origin isolation service worker unavailable:', err);
     return false;
   }
 }
@@ -125,7 +125,7 @@ router
 // ---------------------------------------------------------------------------
 // Dataset selection → overview suite
 // ---------------------------------------------------------------------------
-const SELECTION_KEY = 'duckview.activeDataset';
+const SELECTION_KEY = 'duckbrowser.activeDataset';
 
 async function selectDataset(id) {
   const rec = engine.datasets.get(id);
@@ -186,7 +186,7 @@ const bootAndMount = (async () => {
     if (rec) mounted.push(rec);
   }
   if (mounted.length) {
-    console.info(`%c🦆 DuckView%c mounted ${mounted.length} sample dataset(s): ${mounted.map((r) => r.id).join(', ')}`, 'color:#a78bfa;font-weight:600', 'color:inherit');
+    console.info(`%c🦆 Duckbrowser%c mounted ${mounted.length} sample dataset(s): ${mounted.map((r) => r.id).join(', ')}`, 'color:#a78bfa;font-weight:600', 'color:inherit');
   }
   if (!engine.activeId) overview.renderEmpty('Drop a file to get started.');
   return mounted;
@@ -209,4 +209,4 @@ window.addEventListener('hashchange', async () => {
 });
 
 // Handy for poking around in DevTools.
-window.DuckView = { engine, router, overview, queryTool, docs, settingsPage, settings, panel, DuckQuery, manifest };
+window.Duckbrowser = { engine, router, overview, queryTool, docs, settingsPage, settings, panel, DuckQuery, manifest };

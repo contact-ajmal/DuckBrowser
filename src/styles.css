@@ -1,4 +1,4 @@
-/* DuckView design system — Tailwind v4 entry point.
+/* Duckbrowser design system — Tailwind v4 entry point.
    Dark-mode first, neutral zinc palette, violet accent. */
 @import "tailwindcss" source(none);
 @source "../src";

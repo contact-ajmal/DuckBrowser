@@ -54,7 +54,7 @@ export class DatasetPanel {
       if (select) this.onSelect(rec.id);
       return rec;
     } catch (err) {
-      console.error('[DuckView] failed to load sample', id, err);
+      console.error('[Duckbrowser] failed to load sample', id, err);
       toast(`Could not load sample ${ds.file}`, { tone: 'error', detail: err.message });
       return null;
     } finally {
@@ -192,7 +192,7 @@ export class DatasetPanel {
         const rec = await this.engine.mountLocalFile(file);
         first ??= rec.id;
       } catch (err) {
-        console.error('[DuckView] failed to mount', file.name, err);
+        console.error('[Duckbrowser] failed to mount', file.name, err);
         toast(`Could not load ${file.name}`, { tone: 'error', detail: err.message });
       }
     }

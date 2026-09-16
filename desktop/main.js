@@ -1,7 +1,7 @@
 /**
- * DuckView desktop shell (Electron).
+ * Duckbrowser desktop shell (Electron).
  *
- * Serves the built site from `dist/` over a private `duckview://` scheme so
+ * Serves the built site from `dist/` over a private `duckbrowser://` scheme so
  * ES modules, Web Workers and wasm behave exactly as on a web server:
  *   - correct MIME types (application/wasm, text/javascript …)
  *   - HTTP Range requests, which DuckDB uses to read Parquet samples by byte range
@@ -15,7 +15,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-const SCHEME = 'duckview';
+const SCHEME = 'duckbrowser';
 const HOST = 'app';
 const DIST = path.join(app.getAppPath(), 'dist');
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -116,7 +116,7 @@ function createWindow() {
     height: 920,
     minWidth: 900,
     minHeight: 600,
-    title: 'DuckView',
+    title: 'Duckbrowser',
     backgroundColor: '#09090b',
     show: false,
     icon: process.platform === 'linux' ? path.join(__dirname, '..', 'build', 'icon.png') : undefined,
@@ -170,7 +170,7 @@ function buildMenu() {
     {
       role: 'help',
       submenu: [
-        { label: 'DuckView on GitHub', click: () => shell.openExternal('https://github.com/contact-ajmal/DuckView') },
+        { label: 'Duckbrowser on GitHub', click: () => shell.openExternal('https://github.com/contact-ajmal/Duckbrowser') },
         { label: 'DuckDB documentation', click: () => shell.openExternal('https://duckdb.org/docs/') },
       ],
     },

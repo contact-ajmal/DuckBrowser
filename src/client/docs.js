@@ -39,7 +39,7 @@ export class Docs {
       card.runIfDeferred?.();
       card.onShown?.();
     }
-    if (first) document.title = `${article.dataset.title} · ${window.__DUCKVIEW__?.title ?? 'DuckView'}`;
+    if (first) document.title = `${article.dataset.title} · ${window.__DUCKBROWSER__?.title ?? 'Duckbrowser'}`;
   }
 
   #renderSidebar(slug, article) {

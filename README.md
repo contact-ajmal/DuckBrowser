@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/duckview-banner.svg" alt="DuckView — local-first data workspace on DuckDB-Wasm" width="820">
+  <img src="docs/assets/duckbrowser-banner.svg" alt="Duckbrowser — local-first data workspace on DuckDB-Wasm" width="820">
 </p>
 
 <p align="center">
@@ -10,7 +10,7 @@
   <img alt="Output: static site" src="https://img.shields.io/badge/output-static%20site-0ea5e9">
   <img alt="Smoke test: 87 checks" src="https://img.shields.io/badge/smoke%20test-87%20checks-22c55e">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
-  <a href="https://github.com/contact-ajmal/DuckView/releases"><img alt="Desktop app: macOS + Windows" src="https://img.shields.io/badge/desktop%20app-macOS%20%7C%20Windows-8b5cf6?logo=electron&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/Duckbrowser/releases"><img alt="Desktop app: macOS + Windows" src="https://img.shields.io/badge/desktop%20app-macOS%20%7C%20Windows-8b5cf6?logo=electron&logoColor=white"></a>
 </p>
 
 <p align="center">
@@ -19,20 +19,20 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-arm64.dmg"><img alt="Download for macOS (Apple Silicon)" src="https://img.shields.io/badge/Download-macOS%20Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-x64.dmg"><img alt="Download for macOS (Intel)" src="https://img.shields.io/badge/Download-macOS%20Intel-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
-  <a href="https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-windows-x64-setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/Duckbrowser/releases/latest/download/Duckbrowser-mac-arm64.dmg"><img alt="Download for macOS (Apple Silicon)" src="https://img.shields.io/badge/Download-macOS%20Apple%20Silicon-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/Duckbrowser/releases/latest/download/Duckbrowser-mac-x64.dmg"><img alt="Download for macOS (Intel)" src="https://img.shields.io/badge/Download-macOS%20Intel-000000?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/contact-ajmal/Duckbrowser/releases/latest/download/Duckbrowser-windows-x64-setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download-Windows%2010%20%2F%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white"></a>
 </p>
 <p align="center">
-  <a href="https://contact-ajmal.github.io/DuckView/"><img alt="Try it online" src="https://img.shields.io/badge/Try%20it%20online-contact--ajmal.github.io%2FDuckView-a78bfa?style=for-the-badge&logo=githubpages&logoColor=white"></a>
+  <a href="https://contact-ajmal.github.io/Duckbrowser/"><img alt="Try it online" src="https://img.shields.io/badge/Try%20it%20online-contact--ajmal.github.io%2FDuckbrowser-a78bfa?style=for-the-badge&logo=githubpages&logoColor=white"></a>
 </p>
 <p align="center">
-  <sub>Links always point at the <a href="https://github.com/contact-ajmal/DuckView/releases/latest">latest release</a> · no account, nothing else to install, no internet needed after download · <a href="#install-the-desktop-app">install instructions ↓</a> · the online version runs in your browser and is just as private</sub>
+  <sub>Links always point at the <a href="https://github.com/contact-ajmal/Duckbrowser/releases/latest">latest release</a> · no account, nothing else to install, no internet needed after download · <a href="#install-the-desktop-app">install instructions ↓</a> · the online version runs in your browser and is just as private</sub>
 </p>
 
 ---
 
-**DuckView** turns a folder of Markdown and data files into a static website that runs a full analytical database — [DuckDB](https://duckdb.org), compiled to WebAssembly — inside the browser tab. Open it, drop in a Parquet, CSV, JSON or Arrow file, and within a second you have a schema with per-column statistics, KPIs, a preview and distribution charts. Every one of those is a real SQL query you can open in a tabbed workbench and keep going.
+**Duckbrowser** turns a folder of Markdown and data files into a static website that runs a full analytical database — [DuckDB](https://duckdb.org), compiled to WebAssembly — inside the browser tab. Open it, drop in a Parquet, CSV, JSON or Arrow file, and within a second you have a schema with per-column statistics, KPIs, a preview and distribution charts. Every one of those is a real SQL query you can open in a tabbed workbench and keep going.
 
 There is no server. There is no account. There is no upload. The `dist/` folder is plain HTML, JS and wasm that works from any static host, a `file://` USB stick, or an air-gapped machine.
 
@@ -65,7 +65,7 @@ There is no server. There is no account. There is no upload. The `dist/` folder 
 
 ## Table of contents
 
-- [What makes DuckView different](#what-makes-duckview-different)
+- [What makes Duckbrowser different](#what-makes-duckbrowser-different)
 - [Highlights](#highlights)
 - [The four pages](#the-four-pages)
 - [How it works](#how-it-works)
@@ -85,11 +85,11 @@ There is no server. There is no account. There is no upload. The `dist/` folder 
 
 ---
 
-## What makes DuckView different
+## What makes Duckbrowser different
 
-Most data tools make you choose between *powerful* and *private*, or between *instant* and *flexible*. DuckView sits in a corner few tools occupy: a real columnar SQL engine, in the browser, that starts working the moment a file lands — and that you can publish as a static site.
+Most data tools make you choose between *powerful* and *private*, or between *instant* and *flexible*. Duckbrowser sits in a corner few tools occupy: a real columnar SQL engine, in the browser, that starts working the moment a file lands — and that you can publish as a static site.
 
-| | **DuckView** | Cloud BI<br><sub>Metabase, Mode, Looker Studio</sub> | Notebooks<br><sub>Jupyter, Hex</sub> | Desktop DB tools<br><sub>DBeaver, DuckDB CLI</sub> | Bare DuckDB-Wasm shell |
+| | **Duckbrowser** | Cloud BI<br><sub>Metabase, Mode, Looker Studio</sub> | Notebooks<br><sub>Jupyter, Hex</sub> | Desktop DB tools<br><sub>DBeaver, DuckDB CLI</sub> | Bare DuckDB-Wasm shell |
 |---|:---:|:---:|:---:|:---:|:---:|
 | Where queries run | **your browser tab** | their servers | a kernel you manage | your machine | your browser tab |
 | Data leaves your machine | **never** — no upload, no telemetry, no CDN calls | yes | depends | no | usually fetches extensions from a CDN |
@@ -120,7 +120,7 @@ Three ideas do most of the work:
 
 ## The four pages
 
-DuckView is a single HTML file with four routed views (`#/`, `#/query`, `#/docs/…`, `#/settings`). Routing stays inside the page on purpose: the DuckDB worker and any files you dropped in survive navigation.
+Duckbrowser is a single HTML file with four routed views (`#/`, `#/query`, `#/docs/…`, `#/settings`). Routing stays inside the page on purpose: the DuckDB worker and any files you dropped in survive navigation.
 
 ### 1 · Overview `#/`
 
@@ -143,7 +143,7 @@ A workbench built for "several questions at once":
 - **Tabs** with their own connections. *Run all* starts every tab; *Stop* cancels one without touching the others. Queued tabs (over the concurrency limit) show an amber dot.
 - **Results** as a table or a bar/line chart with x / y pickers; a small view toggle keeps the table one click away from any chart.
 - **Downloads** produced by DuckDB itself (`COPY … TO`), so they always contain the full result even when the table view is truncated.
-- **Import .sql** — one file → one tab; a file produced by *Export all* (sections separated by `-- @duckview-tab: name`) restores all its tabs. Dropping `.sql` files anywhere on the page does the same.
+- **Import .sql** — one file → one tab; a file produced by *Export all* (sections separated by `-- @duckbrowser-tab: name`) restores all its tabs. Dropping `.sql` files anywhere on the page does the same.
 - **Schema explorer** — click a view or a column to insert it at the cursor. **History** — the last N runs with timing; click to reopen.
 - The active dataset selector drives the `dataset` alias, so one query can be pointed at different files.
 
@@ -190,8 +190,8 @@ flowchart LR
 ## Quick start
 
 ```bash
-git clone https://github.com/contact-ajmal/DuckView.git
-cd DuckView
+git clone https://github.com/contact-ajmal/Duckbrowser.git
+cd Duckbrowser
 npm install
 npm run data     # (optional) regenerate the deterministic sample datasets in ./data
 npm run build    # content/ + data/ → dist/   (downloads the two DuckDB extensions once)
@@ -206,35 +206,35 @@ Then open the URL, drop a file onto the page, and read.
 
 ## Desktop app
 
-Don't want to run a build or a server? DuckView ships as a **native desktop app** — the same workspace wrapped in an Electron shell, so it opens like any other application and works with no network at all. Download, install, drop a file.
+Don't want to run a build or a server? Duckbrowser ships as a **native desktop app** — the same workspace wrapped in an Electron shell, so it opens like any other application and works with no network at all. Download, install, drop a file.
 
 ### Download
 
 | Your computer | Download | Size |
 | --- | --- | --- |
-| **Mac with Apple Silicon** (M1, M2, M3, M4 — 2020 or later) | [DuckView-mac-arm64.dmg](https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-arm64.dmg) | ~140 MB |
-| **Mac with an Intel processor** | [DuckView-mac-x64.dmg](https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-mac-x64.dmg) | ~145 MB |
-| **Windows 10 / 11, 64-bit** | [DuckView-windows-x64-setup.exe](https://github.com/contact-ajmal/DuckView/releases/latest/download/DuckView-windows-x64-setup.exe) | ~120 MB |
-| **Any computer, no install** | [contact-ajmal.github.io/DuckView](https://contact-ajmal.github.io/DuckView/) | runs in the browser — same code, same privacy |
+| **Mac with Apple Silicon** (M1, M2, M3, M4 — 2020 or later) | [Duckbrowser-mac-arm64.dmg](https://github.com/contact-ajmal/Duckbrowser/releases/latest/download/Duckbrowser-mac-arm64.dmg) | ~140 MB |
+| **Mac with an Intel processor** | [Duckbrowser-mac-x64.dmg](https://github.com/contact-ajmal/Duckbrowser/releases/latest/download/Duckbrowser-mac-x64.dmg) | ~145 MB |
+| **Windows 10 / 11, 64-bit** | [Duckbrowser-windows-x64-setup.exe](https://github.com/contact-ajmal/Duckbrowser/releases/latest/download/Duckbrowser-windows-x64-setup.exe) | ~120 MB |
+| **Any computer, no install** | [contact-ajmal.github.io/Duckbrowser](https://contact-ajmal.github.io/Duckbrowser/) | runs in the browser — same code, same privacy |
 
 Not sure which Mac you have? Apple menu → *About This Mac*: "Chip: Apple M…" means Apple Silicon; "Processor: Intel…" means Intel.
 
-All versions, release notes and checksums: **[github.com/contact-ajmal/DuckView/releases](https://github.com/contact-ajmal/DuckView/releases)**. The link [`/releases/latest`](https://github.com/contact-ajmal/DuckView/releases/latest) always points at the newest version.
+All versions, release notes and checksums: **[github.com/contact-ajmal/Duckbrowser/releases](https://github.com/contact-ajmal/Duckbrowser/releases)**. The link [`/releases/latest`](https://github.com/contact-ajmal/Duckbrowser/releases/latest) always points at the newest version.
 
 ### Install the desktop app
 
 <details open>
 <summary><strong>macOS</strong></summary>
 
-1. Open the downloaded `.dmg`. A window appears with the DuckView icon and an *Applications* folder.
-2. Drag **DuckView** onto **Applications**.
-3. Eject the DuckView disk image (drag it to the Trash, or click ⏏ in Finder's sidebar).
-4. Open **Applications → DuckView**.
+1. Open the downloaded `.dmg`. A window appears with the Duckbrowser icon and an *Applications* folder.
+2. Drag **Duckbrowser** onto **Applications**.
+3. Eject the Duckbrowser disk image (drag it to the Trash, or click ⏏ in Finder's sidebar).
+4. Open **Applications → Duckbrowser**.
 5. **The first time only**, macOS will object, because the app isn't signed with a paid Apple Developer certificate. What you see depends on the macOS version:
-   - *"DuckView" can't be opened because Apple could not verify it is free of malware* → **right-click** (or Control-click) the app → **Open** → **Open**. Or **System Settings → Privacy & Security** → scroll down → **Open Anyway**.
-   - *"DuckView" is damaged and can't be opened. You should move it to the Bin* → this is the same thing worded worse (the file isn't damaged). Open **Terminal** and run:
+   - *"Duckbrowser" can't be opened because Apple could not verify it is free of malware* → **right-click** (or Control-click) the app → **Open** → **Open**. Or **System Settings → Privacy & Security** → scroll down → **Open Anyway**.
+   - *"Duckbrowser" is damaged and can't be opened. You should move it to the Bin* → this is the same thing worded worse (the file isn't damaged). Open **Terminal** and run:
      ```
-     xattr -cr /Applications/DuckView.app
+     xattr -cr /Applications/Duckbrowser.app
      ```
      then open the app normally.
 
@@ -246,13 +246,13 @@ All versions, release notes and checksums: **[github.com/contact-ajmal/DuckView/
 <details open>
 <summary><strong>Windows</strong></summary>
 
-1. Run the downloaded `DuckView-…-setup.exe`.
+1. Run the downloaded `Duckbrowser-…-setup.exe`.
 2. **SmartScreen** shows *Windows protected your PC* because the installer isn't signed with a code-signing certificate. Click **More info** → **Run anyway**.
 3. Follow the installer: choose the folder (default is fine), and whether you want a desktop shortcut.
-4. Launch **DuckView** from the Start menu or the desktop shortcut.
+4. Launch **Duckbrowser** from the Start menu or the desktop shortcut.
 5. Drop a Parquet / CSV / JSON / Arrow file onto the window.
 
-To uninstall: *Settings → Apps → DuckView → Uninstall* (or Control Panel → Programs).
+To uninstall: *Settings → Apps → Duckbrowser → Uninstall* (or Control Panel → Programs).
 
 </details>
 
@@ -262,18 +262,18 @@ Every release includes `SHA256SUMS.txt`. Compare it with what you downloaded:
 
 ```bash
 # macOS
-shasum -a 256 ~/Downloads/DuckView-mac-arm64.dmg
+shasum -a 256 ~/Downloads/Duckbrowser-mac-arm64.dmg
 ```
 ```powershell
 # Windows (PowerShell)
-Get-FileHash "$env:USERPROFILE\Downloads\DuckView-windows-x64-setup.exe" -Algorithm SHA256
+Get-FileHash "$env:USERPROFILE\Downloads\Duckbrowser-windows-x64-setup.exe" -Algorithm SHA256
 ```
 
 ### What the app does with your data
 
 Nothing you'd have to trust it with. Files you drop in are read by DuckDB inside the app's window through the browser File API — never copied elsewhere, never uploaded. The app makes **no network requests**: the analytics engine, its extensions and every library are inside the installer, so it works on a machine with no internet at all. Downloads (CSV / Parquet / JSON / `.sql`) open the native *Save as…* dialog; links open in your default browser.
 
-Under the hood the app serves the same `dist/` bundle as the website over a private `duckview://` scheme with correct MIME types, byte-range support (so Parquet samples are read by column) and cross-origin-isolation headers (so the opt-in multi-threaded engine is available), in a sandboxed renderer with no Node access.
+Under the hood the app serves the same `dist/` bundle as the website over a private `duckbrowser://` scheme with correct MIME types, byte-range support (so Parquet samples are read by column) and cross-origin-isolation headers (so the opt-in multi-threaded engine is available), in a sandboxed renderer with no Node access.
 
 ### System requirements
 
@@ -284,8 +284,8 @@ Under the hood the app serves the same `dist/` bundle as the website over a priv
 ### Build the installers yourself
 
 ```bash
-npm run dist:mac    # release/DuckView-<version>-mac-{arm64,x64}.dmg
-npm run dist:win    # release/DuckView-<version>-windows-x64-setup.exe   (works on a Mac too)
+npm run dist:mac    # release/Duckbrowser-<version>-mac-{arm64,x64}.dmg
+npm run dist:win    # release/Duckbrowser-<version>-windows-x64-setup.exe   (works on a Mac too)
 npm run desktop     # just run the app from the source tree
 ```
 
@@ -340,7 +340,7 @@ Cards run only when their page is opened, so a large docs site costs nothing unt
 
 ## Resources, limits and the honest numbers
 
-DuckView detects the machine and tunes DuckDB, then lets you override everything on the **Settings** page. It also refuses to pretend.
+Duckbrowser detects the machine and tunes DuckDB, then lets you override everything on the **Settings** page. It also refuses to pretend.
 
 **The 4 GB ceiling.** DuckDB-Wasm is a 32-bit WebAssembly module. Its address space tops out at **4 GB per engine instance**, regardless of how much RAM the machine has. A 16 GB laptop still gets at most 4 GB *per engine*, and the last 512 MB are shared with the engine module itself. The memory slider runs from 256 MB to that ceiling, with the 3.5–4 GB band marked as unsafe. Files far bigger than 4 GB still query fine as long as each query's *working set* fits — Parquet is read column by column, so filter early, aggregate, and avoid `SELECT *`.
 
@@ -361,14 +361,14 @@ The navbar pill always shows the engine state, detected cores, current memory he
 
 - **Nothing is uploaded.** Files are read by DuckDB through the browser's `File` API inside the tab. Close the tab and they are gone.
 - **No telemetry, no accounts, no cookies.** Workbench tabs, history and settings are kept in `localStorage` on your device; *Clear everything* wipes them.
-- **No CDN, no extension downloads.** DuckDB-Wasm normally fetches its `parquet` and `json` extensions from `extensions.duckdb.org` on first use. DuckView's build vendors those files and points the engine at its own copy (`SET custom_extension_repository`). The smoke test blocks every request that isn't `localhost` for the entire run and asserts that none was attempted.
+- **No CDN, no extension downloads.** DuckDB-Wasm normally fetches its `parquet` and `json` extensions from `extensions.duckdb.org` on first use. Duckbrowser's build vendors those files and points the engine at its own copy (`SET custom_extension_repository`). The smoke test blocks every request that isn't `localhost` for the entire run and asserts that none was attempted.
 - **Works air-gapped.** Build once with internet (the same requirement as `npm install`), then serve `dist/` from anywhere — including a machine with no network at all.
 
 ## Deploying
 
 `dist/` is static. Copy it to any web server, object storage bucket, GitHub Pages, Netlify, an intranet share, or a USB stick.
 
-This repository deploys itself to **GitHub Pages** on every push to `main` via [`.github/workflows/pages.yml`](.github/workflows/pages.yml): **https://contact-ajmal.github.io/DuckView/**. Nothing about the hosted copy is different — your files still never leave your browser.
+This repository deploys itself to **GitHub Pages** on every push to `main` via [`.github/workflows/pages.yml`](.github/workflows/pages.yml): **https://contact-ajmal.github.io/Duckbrowser/**. Nothing about the hosted copy is different — your files still never leave your browser.
 
 - **Single-threaded engine (default):** works everywhere with no configuration.
 - **Multi-threaded engine:** needs the page to be cross-origin isolated. Either send two headers from your host —
@@ -394,7 +394,7 @@ Add `?debug` to the URL when testing by hand to get DuckDB's own console logger.
 
 ```
 content/               Markdown doc pages (front matter: title, description, order)
-desktop/main.js        Electron shell (private duckview:// scheme, range support, isolation headers)
+desktop/main.js        Electron shell (private duckbrowser:// scheme, range support, isolation headers)
 build/icon.png         App icon source (electron-builder derives .icns / .ico)
 .github/workflows/     release.yml — test + build installers on tag push
 data/                  Sample datasets — each file is offered as a sample, mounted on request
@@ -435,8 +435,8 @@ release/               Desktop installers (electron-builder output, git-ignored)
 `package.json`:
 
 ```json
-"duckview": {
-  "title": "DuckView",
+"duckbrowser": {
+  "title": "Duckbrowser",
   "autoload": false,
   "defaultDataset": "sales"
 }
@@ -452,8 +452,8 @@ Per-visitor preferences live in the Settings page. Deep links: `#/query?ds=order
 
 ## Known limitations and roadmap
 
-- **Memory is capped at 4 GB per engine** by 32-bit WebAssembly. A Memory64 build of DuckDB-Wasm would lift this; DuckView will pick it up when it exists.
-- **The threaded engine can't read Parquet/JSON yet** (DuckDB-Wasm 1.32 publishes those extensions for unshared memory). Tracked upstream; the code path in DuckView is ready and the Settings page will stop warning when a fixed release lands.
+- **Memory is capped at 4 GB per engine** by 32-bit WebAssembly. A Memory64 build of DuckDB-Wasm would lift this; Duckbrowser will pick it up when it exists.
+- **The threaded engine can't read Parquet/JSON yet** (DuckDB-Wasm 1.32 publishes those extensions for unshared memory). Tracked upstream; the code path in Duckbrowser is ready and the Settings page will stop warning when a fixed release lands.
 - **Files persist only for the tab's lifetime.** Persisting dropped files with the Origin Private File System is on the list.
 - **One engine per tab.** Cross-tab sharing (SharedWorker) is not attempted.
 - Ideas being considered: saved dashboards, pivot builder, CSV/Parquet conversion in place, chart export as PNG.
@@ -467,6 +467,6 @@ Per-visitor preferences live in the Settings page. Deep links: `#/query?ds=order
 [MIT](LICENSE) © 2026 Ajmal Baba. DuckDB, Apache Arrow, Chart.js, Prism, Tailwind CSS and the other bundled libraries remain under their own licenses.
 
 <p align="center">
-  <img src="docs/assets/duckview-mark.svg" alt="" width="40"><br>
+  <img src="docs/assets/duckbrowser-mark.svg" alt="" width="40"><br>
   <sub>Made for people who would rather look at their data than upload it.</sub>
 </p>

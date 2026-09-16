@@ -4,29 +4,30 @@
  * Two groups:
  *   engine.*   DuckDB settings applied live via SET (memory_limit, threads, …)
  *              `null` means "auto" — use the hardware-derived default.
- *   the rest   DuckView behaviour (row limits, overview profile, thresholds…)
+ *   the rest   Duckbrowser behaviour (row limits, overview profile, thresholds…)
  */
 
-const KEY = 'duckview.settings';
+const KEY = 'duckbrowser.settings';
 
 /**
- * The project was renamed from QuillDB. Carry over anything saved under the
- * old key prefix the first time this build runs, so tabs, history and
- * settings survive the rename. Runs once per storage area (old keys are left
- * in place, untouched).
+ * The project has been renamed twice (QuillDB → DuckView → Duckbrowser).
+ * Carry over anything saved under an old key prefix the first time this
+ * build runs, so tabs, history and settings survive. Newer prefixes win.
+ * Old keys are left in place, untouched.
  */
+const LEGACY_PREFIXES = ['duckview.', 'quilldb.'];
 export function migrateLegacyStorage() {
   for (const area of [globalThis.localStorage, globalThis.sessionStorage]) {
     try {
       if (!area) continue;
-      const legacy = [];
-      for (let i = 0; i < area.length; i++) {
-        const k = area.key(i);
-        if (k && k.startsWith('quilldb.')) legacy.push(k);
-      }
-      for (const k of legacy) {
-        const next = `duckview.${k.slice('quilldb.'.length)}`;
-        if (area.getItem(next) == null) area.setItem(next, area.getItem(k));
+      const keys = [];
+      for (let i = 0; i < area.length; i++) keys.push(area.key(i));
+      for (const prefix of LEGACY_PREFIXES) {
+        for (const k of keys) {
+          if (!k || !k.startsWith(prefix)) continue;
+          const next = `duckbrowser.${k.slice(prefix.length)}`;
+          if (area.getItem(next) == null) area.setItem(next, area.getItem(k));
+        }
       }
     } catch {
       /* private mode / blocked storage */
@@ -114,7 +115,7 @@ class Settings {
       try {
         fn(path, value);
       } catch (e) {
-        console.error('[DuckView] settings listener threw', e);
+        console.error('[Duckbrowser] settings listener threw', e);
       }
     }
   }

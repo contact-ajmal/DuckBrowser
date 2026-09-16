@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * DuckView build pipeline.
+ * Duckbrowser build pipeline.
  *
  *   content/*.md  ──marked──▶  dist/index.html  (docs view; ```sql fences → <duck-query>)
  *   data/*        ──copy───▶  dist/data/        (+ dist/manifest.json)
@@ -282,7 +282,7 @@ async function detectDuckDBVersion() {
 
 async function vendorExtensions() {
   const version = await detectDuckDBVersion();
-  const cacheRoot = path.join(ROOT, 'node_modules', '.cache', 'duckview', 'duckdb-extensions', version);
+  const cacheRoot = path.join(ROOT, 'node_modules', '.cache', 'duckbrowser', 'duckdb-extensions', version);
   const outRoot = path.join(DIRS.dist, 'vendor', 'duckdb', 'extensions', version);
   const vendored = [];
   const missing = [];
@@ -343,7 +343,7 @@ function buildTailwind(input, output) {
 // ---------------------------------------------------------------------------
 async function build() {
   const t0 = Date.now();
-  console.log(`\n🦆  ${c.bold('DuckView build')} ${c.dim(`v${pkg.version}`)}`);
+  console.log(`\n🦆  ${c.bold('Duckbrowser build')} ${c.dim(`v${pkg.version}`)}`);
 
   step(1, 'Clean output directory');
   await fs.emptyDir(DIRS.dist);
@@ -381,7 +381,7 @@ async function build() {
   const ext = await vendorExtensions();
   for (const v of ext.vendored) item(`extensions/${ext.version}/${v.platform}/${v.name}${' '.repeat(Math.max(1, 20 - v.platform.length - v.name.length))}${fmtBytes(v.size).padStart(9)}`);
   for (const m of ext.missing) item(c.yellow(`extension ${m.platform}/${m.name} NOT vendored (${m.error}) — the engine would fall back to ${EXTENSION_REPO} at runtime`));
-  item(c.dim(`DuckDB ${ext.version} · extensions served from ./vendor/duckdb/extensions, cached in node_modules/.cache/duckview`));
+  item(c.dim(`DuckDB ${ext.version} · extensions served from ./vendor/duckdb/extensions, cached in node_modules/.cache/duckbrowser`));
 
   step(4, 'Copy client modules');
   const clientFiles = [];
@@ -402,10 +402,10 @@ async function build() {
   step(6, 'Render Markdown docs + page shell');
   const pages = await collectPages();
   const template = await fs.readFile(path.join(DIRS.src, 'template.html'), 'utf8');
-  const config = pkg.duckview ?? {};
+  const config = pkg.duckbrowser ?? {};
   const manifest = {
-    name: 'DuckView',
-    title: config.title || 'DuckView',
+    name: 'Duckbrowser',
+    title: config.title || 'Duckbrowser',
     version: pkg.version,
     description: config.description || pkg.description,
     // Samples are listed but only mounted on request unless `autoload` is set.

@@ -262,7 +262,7 @@ export class SettingsPage {
     };
     this.ui.reloadBtn.addEventListener('click', () => {
       try {
-        sessionStorage.removeItem('duckview.coi.reloaded');
+        sessionStorage.removeItem('duckbrowser.coi.reloaded');
       } catch {
         /* ignore */
       }
@@ -450,12 +450,12 @@ export class SettingsPage {
 
   #clear(what) {
     const note = this.ui.clearNote;
-    if (what === 'history' || what === 'all') localStorage.removeItem('duckview.query.history');
-    if (what === 'tabs' || what === 'all') localStorage.removeItem('duckview.query.tabs');
+    if (what === 'history' || what === 'all') localStorage.removeItem('duckbrowser.query.history');
+    if (what === 'tabs' || what === 'all') localStorage.removeItem('duckbrowser.query.tabs');
     if (what === 'all') {
       // Both prefixes: current keys and anything migrated from the QuillDB days.
       for (const area of [localStorage, sessionStorage]) {
-        for (const k of Object.keys(area)) if (/^(duckview|quilldb)\./.test(k)) area.removeItem(k);
+        for (const k of Object.keys(area)) if (/^(duckbrowser|duckview|quilldb)\./.test(k)) area.removeItem(k);
       }
       location.reload();
       return;
