@@ -1,0 +1,6 @@
+code	region_name	hq_country	timezone	target_revenue
+NA	North America	United States	America/New_York	2400000
+EU	Europe	Germany	Europe/Berlin	1900000
+APAC	Asia Pacific	Singapore	Asia/Singapore	1500000
+LATAM	Latin America	Brazil	America/Sao_Paulo	700000
+MEA	Middle East & Africa	United Arab Emirates	Asia/Dubai	500000

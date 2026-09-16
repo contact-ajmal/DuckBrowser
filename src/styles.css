@@ -1,0 +1,148 @@
+/* Duckview design system — Tailwind v4 entry point.
+   Dark-mode first, neutral zinc palette, violet accent. */
+@import "tailwindcss" source(none);
+@source "../src";
+@source "../content";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --color-accent: oklch(0.71 0.16 293); /* violet-400-ish */
+}
+
+@layer base {
+  html { scrollbar-color: #3f3f46 transparent; }
+  body { font-family: var(--font-sans); }
+  duck-query { display: block; }
+  /* Pre-hydration fallback: raw SQL inside <duck-query> looks like a code block. */
+  duck-query > pre.dq-src {
+    @apply my-4 overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 font-mono text-[13px] leading-6 text-zinc-300;
+  }
+  ::-webkit-scrollbar { height: 10px; width: 10px; }
+  ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { background: #52525b; background-clip: padding-box; border: 2px solid transparent; }
+  ::-webkit-scrollbar-track { background: transparent; }
+}
+
+@layer components {
+  /* ── Cards & buttons ─────────────────────────────────────────────────── */
+  .card { @apply rounded-xl border border-zinc-800 bg-zinc-900/40; }
+  .btn {
+    @apply inline-flex h-7 shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900 px-2.5 text-xs font-medium text-zinc-300 transition-colors select-none;
+    @apply hover:border-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary { @apply border-violet-500/40 bg-violet-500/15 text-violet-200 hover:border-violet-400/60 hover:bg-violet-500/25 hover:text-violet-100; }
+  .btn-ghost { @apply border-transparent bg-transparent text-zinc-400 hover:border-zinc-800 hover:bg-zinc-900 hover:text-zinc-200; }
+  .btn-icon { @apply w-7 justify-center px-0; }
+  .kbd { @apply rounded border border-zinc-700 bg-zinc-800 px-1 py-px font-mono text-[10px] text-zinc-400; }
+  .badge { @apply inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 font-mono text-[10px] leading-4 whitespace-nowrap; }
+  .badge-zinc { @apply border-zinc-800 bg-zinc-900 text-zinc-400; }
+  .badge-green { @apply border-emerald-500/30 bg-emerald-500/10 text-emerald-300; }
+  .badge-yellow { @apply border-amber-500/30 bg-amber-500/10 text-amber-300; }
+  .badge-red { @apply border-rose-500/30 bg-rose-500/10 text-rose-300; }
+  .badge-violet { @apply border-violet-500/30 bg-violet-500/10 text-violet-300; }
+  .spinner { @apply inline-block size-3 animate-spin rounded-full border-[1.5px] border-zinc-600 border-t-violet-400; }
+  .skeleton { @apply animate-pulse rounded-md bg-zinc-800/80; }
+
+  /* ── Result tables ───────────────────────────────────────────────────── */
+  .grid-table { @apply w-full border-collapse font-mono text-[12px] leading-5 whitespace-nowrap; }
+  .grid-table thead th {
+    @apply sticky top-0 z-10 border-b border-zinc-800 bg-zinc-900 px-3 py-2 text-left font-medium text-zinc-300;
+  }
+  .grid-table thead th .type { @apply ml-1.5 font-normal text-zinc-600; }
+  .grid-table tbody td { @apply border-b border-zinc-800/60 px-3 py-1.5 text-zinc-300; }
+  .grid-table tbody tr:hover td { @apply bg-zinc-800/40; }
+  .grid-table td.num, .grid-table th.num { @apply text-right tabular-nums; }
+  .grid-table td.null { @apply text-zinc-600 italic; }
+  .grid-table td.bool { @apply text-sky-300; }
+  .grid-table td.date { @apply text-teal-300; }
+  .grid-table td.str { @apply text-zinc-200; }
+  .grid-table td.json { @apply max-w-[28rem] truncate text-amber-200/80; }
+
+  /* ── SQL editor (transparent textarea over a Prism-highlighted <pre>) ─ */
+  .sql-editor { @apply relative rounded-lg border border-zinc-800 bg-zinc-950/70 font-mono text-[13px] leading-6 transition-colors; }
+  .sql-editor:focus-within { @apply border-violet-500/50 ring-2 ring-violet-500/15; }
+  .sql-editor[data-readonly="true"] { @apply bg-zinc-900/30; }
+  .sql-editor > pre, .sql-editor > textarea {
+    @apply m-0 min-h-[3.75rem] w-full p-3 font-mono text-[13px] leading-6 whitespace-pre-wrap;
+    overflow-wrap: anywhere;
+    tab-size: 2;
+  }
+  .sql-editor > pre { @apply pointer-events-none text-zinc-200; }
+  .sql-editor > textarea {
+    @apply absolute inset-0 h-full resize-none overflow-hidden border-0 bg-transparent text-transparent caret-zinc-100 outline-none;
+  }
+  .sql-editor > textarea::selection { background: rgba(139, 92, 246, 0.35); }
+  .sql-editor > textarea[readonly] { @apply cursor-default caret-transparent; }
+
+  /* Prism token colours (dark) */
+  .token.keyword { @apply text-violet-300; }
+  .token.function { @apply text-sky-300; }
+  .token.string { @apply text-emerald-300; }
+  .token.number { @apply text-amber-300; }
+  .token.operator, .token.punctuation { @apply text-zinc-500; }
+  .token.comment { @apply text-zinc-500 italic; }
+  .token.boolean { @apply text-sky-300; }
+  .token.variable, .token.identifier { @apply text-zinc-100; }
+
+  /* ── Markdown document ───────────────────────────────────────────────── */
+  .doc { @apply max-w-none text-[15px] leading-7 text-zinc-300; }
+  .doc > :first-child { @apply mt-0; }
+  .doc h1 { @apply mt-2 mb-4 text-3xl font-semibold tracking-tight text-zinc-50; }
+  .doc h2 { @apply mt-12 mb-3 border-b border-zinc-800 pb-2 text-xl font-semibold tracking-tight text-zinc-100; }
+  .doc h3 { @apply mt-8 mb-2 text-base font-semibold text-zinc-100; }
+  .doc h4 { @apply mt-6 mb-2 text-sm font-semibold uppercase tracking-wider text-zinc-400; }
+  .doc h1 .anchor, .doc h2 .anchor, .doc h3 .anchor, .doc h4 .anchor { @apply text-inherit no-underline; }
+  .doc h2 .anchor:hover::after, .doc h3 .anchor:hover::after { content: " #"; @apply text-zinc-600; }
+  .doc p { @apply my-4; }
+  .doc a:not(.anchor) { @apply text-violet-300 underline decoration-violet-300/30 underline-offset-4 transition-colors hover:text-violet-200 hover:decoration-violet-200/60; }
+  .doc strong { @apply font-semibold text-zinc-100; }
+  .doc ul { @apply my-4 list-disc space-y-1.5 pl-6 marker:text-zinc-600; }
+  .doc ol { @apply my-4 list-decimal space-y-1.5 pl-6 marker:text-zinc-500; }
+  .doc li > p { @apply my-1; }
+  .doc blockquote { @apply my-5 border-l-2 border-violet-500/50 pl-4 text-zinc-400 italic; }
+  .doc hr { @apply my-10 border-zinc-800; }
+  .doc code:not(pre code) { @apply rounded-md border border-zinc-800 bg-zinc-900 px-1.5 py-0.5 font-mono text-[0.85em] text-zinc-200; }
+  .doc pre.code-block { @apply my-4 overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 font-mono text-[13px] leading-6 text-zinc-300; }
+  .doc .table-wrap { @apply my-5 overflow-x-auto rounded-xl border border-zinc-800; }
+  .doc table { @apply w-full border-collapse text-sm; }
+  .doc thead th { @apply border-b border-zinc-800 bg-zinc-900 px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-zinc-400; }
+  .doc tbody td { @apply border-b border-zinc-800/60 px-3 py-2 align-top; }
+  .doc tbody tr:last-child td { @apply border-b-0; }
+  .doc duck-query { @apply my-6; }
+  .doc kbd { @apply rounded border border-zinc-700 bg-zinc-800 px-1 py-px font-mono text-[10px] text-zinc-400; }
+
+  /* ── Drop zone drag state ────────────────────────────────────────────── */
+  #dropzone.is-dragging { @apply border-violet-400 bg-violet-500/10 text-zinc-200; }
+  body.is-dragging-file::after {
+    content: "Drop to load into DuckDB";
+    @apply pointer-events-none fixed inset-0 z-[60] grid place-items-center bg-zinc-950/70 text-lg font-medium text-zinc-100 backdrop-blur-sm;
+  }
+
+  /* ── Routed views (sidebar + main) ───────────────────────────────────── */
+  .view { @apply mx-auto grid max-w-[1600px] grid-cols-1 gap-6 px-4 py-6 pb-16 sm:px-6 lg:grid-cols-[272px_minmax(0,1fr)]; }
+  .view-aside { @apply space-y-5 lg:sticky lg:top-20 lg:self-start; }
+  .view-main { @apply min-w-0; }
+  .nav-link { @apply rounded-md px-2.5 py-1.5 text-sm text-zinc-400 transition-colors hover:bg-zinc-900 hover:text-zinc-100 whitespace-nowrap; }
+  .nav-link.is-active { @apply bg-zinc-800 text-zinc-100; }
+  .qt-editor-box > pre, .qt-editor-box > textarea { @apply min-h-[11rem]; }
+
+  /* ── Settings controls ───────────────────────────────────────────────── */
+  .switch { @apply relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center; }
+  .switch input { @apply sr-only; }
+  .switch-track { @apply absolute inset-0 rounded-full bg-zinc-700 transition-colors; }
+  .switch-track::after {
+    content: "";
+    @apply absolute top-0.5 left-0.5 size-4 rounded-full bg-zinc-100 shadow transition-transform;
+  }
+  .switch input:checked + .switch-track { @apply bg-violet-500; }
+  .switch input:checked + .switch-track::after { transform: translateX(1rem); }
+  .switch input:focus-visible + .switch-track { @apply outline-2 outline-offset-2 outline-violet-500; }
+  .st-select { @apply h-8 rounded-md border border-zinc-800 bg-zinc-900 px-2 font-mono text-xs text-zinc-200 outline-none focus:border-violet-500/60; }
+  .st-num { @apply h-8 rounded-md border border-zinc-800 bg-zinc-900 px-2 text-right font-mono text-xs text-zinc-200 outline-none focus:border-violet-500/60; }
+  input[type="range"]:disabled { @apply cursor-not-allowed opacity-40; }
+
+  /* Entrance animation for freshly rendered cards. */
+  .fade-in { animation: fade-in 220ms ease-out both; }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}

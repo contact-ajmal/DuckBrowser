@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" class="dark h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="{{description}}">
+  <title>{{title}}</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2318181b'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle'%3E%F0%9F%A6%86%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script>window.Prism = window.Prism || {}; window.Prism.manual = true;</script>
+  <script src="./vendor/prism/prism-core.min.js"></script>
+  <script src="./vendor/prism/prism-sql.min.js"></script>
+  <script src="./vendor/chart.umd.js"></script>
+  <script>window.__DUCKVIEW__ = {{manifest}};</script>
+  <script type="module" src="./assets/client.js"></script>
+</head>
+<body class="min-h-full bg-zinc-950 text-zinc-100 antialiased selection:bg-violet-500/30">
+
+  <!-- ─── Navbar ─────────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-40 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/60">
+    <div class="mx-auto flex h-14 max-w-[1600px] items-center gap-3 px-4 sm:px-6">
+      <a href="#/" class="flex items-center gap-2 font-semibold tracking-tight">
+        <span class="grid size-7 place-items-center rounded-lg bg-zinc-900 text-base leading-none ring-1 ring-zinc-800" aria-hidden="true">🦆</span>
+        <span>{{title}}</span>
+        <span class="hidden rounded-md border border-zinc-800 px-1.5 py-0.5 font-mono text-[10px] font-normal text-zinc-500 sm:inline">v{{version}}</span>
+      </a>
+      <nav id="main-nav" class="ml-4 hidden items-center gap-1 md:flex" aria-label="Pages">
+        <a href="#/" data-route="home" class="nav-link">Overview</a>
+        <a href="#/query" data-route="query" class="nav-link">Query</a>
+        <a href="#/docs" data-route="docs" class="nav-link">Docs</a>
+        <a href="#/settings" data-route="settings" class="nav-link">Settings</a>
+      </nav>
+      <div id="status-pill" class="ml-auto flex items-center" aria-live="polite">
+        <span class="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1 font-mono text-[11px] text-zinc-400">
+          <span class="size-1.5 animate-pulse rounded-full bg-zinc-500"></span> Booting engine…
+        </span>
+      </div>
+    </div>
+    <nav id="mobile-nav" class="flex gap-1 overflow-x-auto px-4 pb-2 md:hidden" aria-label="Pages">
+      <a href="#/" data-route="home" class="nav-link">Overview</a>
+      <a href="#/query" data-route="query" class="nav-link">Query</a>
+      <a href="#/docs" data-route="docs" class="nav-link">Docs</a>
+      <a href="#/settings" data-route="settings" class="nav-link">Settings</a>
+    </nav>
+  </header>
+
+  <!-- ─── Page 1 · Overview ───────────────────────────────────────────────── -->
+  <section data-view="home" class="view" hidden aria-label="Dataset overview">
+    <aside class="view-aside">
+      <section id="dataset-panel" class="card">
+        <header class="flex items-center justify-between border-b border-zinc-800 px-4 py-3">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Your datasets</h2>
+          <span id="dataset-count" class="font-mono text-[11px] text-zinc-500"></span>
+        </header>
+        <label id="dropzone" class="group m-3 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-zinc-700 px-3 py-6 text-center text-xs text-zinc-500 transition-colors hover:border-violet-500/60 hover:bg-violet-500/5 hover:text-zinc-300">
+          <svg class="size-6 text-zinc-600 transition-colors group-hover:text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0-4 4m4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <span><strong class="font-medium text-zinc-300">Drop files</strong> or click to browse</span>
+          <span class="font-mono text-[10px] text-zinc-600">parquet · csv · tsv · json · ndjson · arrow · sql</span>
+          <input id="file-input" type="file" multiple class="sr-only" accept=".parquet,.csv,.tsv,.json,.ndjson,.jsonl,.arrow,.feather,.ipc,.sql,.txt">
+        </label>
+        <ul id="dataset-list" class="divide-y divide-zinc-800/70 border-t border-zinc-800"></ul>
+        <p class="px-4 py-3 text-[11px] leading-relaxed text-zinc-600">Files never leave this tab. They are read directly by DuckDB-Wasm in a Web Worker.</p>
+      </section>
+
+      <section id="samples-panel" class="card" hidden>
+        <header class="flex items-center justify-between border-b border-zinc-800 px-4 py-3">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Sample data</h2>
+          <button type="button" id="samples-load-all" class="btn btn-ghost h-6 px-1.5 text-[11px]">Load all</button>
+        </header>
+        <ul id="sample-list" class="divide-y divide-zinc-800/70"></ul>
+        <p class="px-4 py-2.5 text-[11px] leading-relaxed text-zinc-600">Bundled with this build for the docs examples. Nothing loads until you ask.</p>
+      </section>
+
+      <section id="system-panel" class="card">
+        <header class="border-b border-zinc-800 px-4 py-3">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">System</h2>
+        </header>
+        <dl id="system-facts" class="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-3 gap-y-1.5 px-4 py-3 font-mono text-[11px] text-zinc-400">
+          <dt class="text-zinc-500">engine</dt><dd class="animate-pulse text-zinc-600">detecting…</dd>
+        </dl>
+      </section>
+    </aside>
+    <main id="overview" class="view-main space-y-4"></main>
+  </section>
+
+  <!-- ─── Page 2 · Query ──────────────────────────────────────────────────── -->
+  <section data-view="query" class="view" hidden aria-label="SQL query tool">
+    <aside id="query-sidebar" class="view-aside"></aside>
+    <main id="query-tool" class="view-main"></main>
+  </section>
+
+  <!-- ─── Page 3 · Docs ───────────────────────────────────────────────────── -->
+  <section data-view="docs" class="view" hidden aria-label="Documentation">
+    <aside id="docs-sidebar" class="view-aside"></aside>
+    <main id="docs-main" class="view-main">
+{{docs}}
+    </main>
+  </section>
+
+  <!-- ─── Page 4 · Settings ───────────────────────────────────────────────── -->
+  <section data-view="settings" class="view" hidden aria-label="Settings">
+    <aside id="settings-sidebar" class="view-aside"></aside>
+    <main id="settings-main" class="view-main"></main>
+  </section>
+
+</body>
+</html>

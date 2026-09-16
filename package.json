@@ -1,0 +1,38 @@
+{
+  "name": "duckview",
+  "version": "0.1.0",
+  "description": "Local-first, privacy-focused static data workspace. Markdown + data files in, DuckDB-Wasm dashboard out.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "data": "node scripts/generate-data.js",
+    "build": "node src/build.js",
+    "dev": "serve dist -l 4173 -n",
+    "start": "npm run build && npm run dev",
+    "test": "npm run build && node scripts/smoke-test.mjs",
+    "test:live": "node scripts/smoke-test.mjs --url http://localhost:4173"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.29.0",
+    "chart.js": "^4.4.0",
+    "fs-extra": "^11.2.0",
+    "marked": "^15.0.0",
+    "prismjs": "^1.29.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "apache-arrow": "^17.0.0",
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.63.0",
+    "serve": "^14.2.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "duckview": {
+    "title": "Duckview",
+    "autoload": false,
+    "defaultDataset": "sales"
+  }
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "sku": "QL-100",
+    "name": "Quill Notebook A5",
+    "category": "Stationery",
+    "unit_price": 12.5,
+    "cost": 4.1,
+    "weight_kg": 0.32,
+    "launched": "2021-03-01"
+  },
+  {
+    "sku": "QL-101",
+    "name": "Quill Notebook A4",
+    "category": "Stationery",
+    "unit_price": 16,
+    "cost": 5.3,
+    "weight_kg": 0.51,
+    "launched": "2021-03-01"
+  },
+  {
+    "sku": "QL-110",
+    "name": "Fountain Pen Classic",
+    "category": "Writing",
+    "unit_price": 48,
+    "cost": 15.2,
+    "weight_kg": 0.05,
+    "launched": "2020-09-15"
+  },
+  {
+    "sku": "QL-111",
+    "name": "Fountain Pen Brass",
+    "category": "Writing",
+    "unit_price": 79,
+    "cost": 24.8,
+    "weight_kg": 0.07,
+    "launched": "2022-05-20"
+  },
+  {
+    "sku": "QL-112",
+    "name": "Gel Pen 5-pack",
+    "category": "Writing",
+    "unit_price": 9.9,
+    "cost": 2.4,
+    "weight_kg": 0.06,
+    "launched": "2020-01-10"
+  },
+  {
+    "sku": "QL-120",
+    "name": "Ink Cartridge Midnight",
+    "category": "Ink",
+    "unit_price": 6.5,
+    "cost": 1.1,
+    "weight_kg": 0.02,
+    "launched": "2020-09-15"
+  },
+  {
+    "sku": "QL-121",
+    "name": "Ink Bottle Sepia 50ml",
+    "category": "Ink",
+    "unit_price": 18,
+    "cost": 4.9,
+    "weight_kg": 0.14,
+    "launched": "2021-11-02"
+  },
+  {
+    "sku": "QL-130",
+    "name": "Desk Mat Linen",
+    "category": "Desk",
+    "unit_price": 34,
+    "cost": 11,
+    "weight_kg": 0.8,
+    "launched": "2022-02-14"
+  },
+  {
+    "sku": "QL-131",
+    "name": "Pen Stand Walnut",
+    "category": "Desk",
+    "unit_price": 29,
+    "cost": 9.5,
+    "weight_kg": 0.42,
+    "launched": "2022-02-14"
+  },
+  {
+    "sku": "QL-132",
+    "name": "Monitor Riser Oak",
+    "category": "Desk",
+    "unit_price": 64,
+    "cost": 22,
+    "weight_kg": 2.1,
+    "launched": "2023-04-03"
+  },
+  {
+    "sku": "QL-140",
+    "name": "Leather Journal Cover",
+    "category": "Accessories",
+    "unit_price": 42,
+    "cost": 13.7,
+    "weight_kg": 0.25,
+    "launched": "2021-07-19"
+  },
+  {
+    "sku": "QL-141",
+    "name": "Pen Case Canvas",
+    "category": "Accessories",
+    "unit_price": 22,
+    "cost": 6.8,
+    "weight_kg": 0.12,
+    "launched": "2021-07-19"
+  },
+  {
+    "sku": "QL-150",
+    "name": "Planner 2024",
+    "category": "Stationery",
+    "unit_price": 24,
+    "cost": 7.2,
+    "weight_kg": 0.45,
+    "launched": "2023-10-01"
+  },
+  {
+    "sku": "QL-151",
+    "name": "Sticky Notes Pastel",
+    "category": "Stationery",
+    "unit_price": 5.5,
+    "cost": 1.3,
+    "weight_kg": 0.09,
+    "launched": "2020-01-10"
+  },
+  {
+    "sku": "QL-160",
+    "name": "Calligraphy Starter Kit",
+    "category": "Writing",
+    "unit_price": 58,
+    "cost": 19,
+    "weight_kg": 0.6,
+    "launched": "2023-01-25"
+  }
+]
